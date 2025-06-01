@@ -6,8 +6,12 @@ package controladores;
 
 import modelo.Categoria;
 import modelo.Cliente;
+import modelo.Dispositivo;
 import modelo.Gestor;
+import modelo.Ingrediente;
+import modelo.Insumo;
 import modelo.Item;
+import modelo.Pedido;
 import modelo.UnidadProcesadora;
 
 /**
@@ -19,11 +23,13 @@ public class Fachada {
     private ServicioDispositivos sDispositivos;
     private ServicioItems sItems;
     private ServicioPersonas sPersonas;
+    private ServicioInsumos sInsumos;
 
     private Fachada() {
         this.sDispositivos = new ServicioDispositivos();
         this.sItems = new ServicioItems();
         this.sPersonas = new ServicioPersonas();
+        this.sInsumos = new ServicioInsumos();
     }
 
     public static Fachada getInstancia() {
@@ -48,5 +54,21 @@ public class Fachada {
     
     public void agregar (UnidadProcesadora u){
         sItems.agregar(u);
+    }
+    
+    public void agregar (Insumo insumo){
+        sInsumos.agregar(insumo);
+    }
+    
+    public void agregar (Ingrediente ingrediente){
+        sInsumos.agregar(ingrediente);
+    }
+    
+    public void agregar (Dispositivo d){
+        sDispositivos.agregar(d);
+    }
+    
+    public void agregar (Pedido p){
+        sDispositivos.agregar(p);
     }
 }

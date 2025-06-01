@@ -20,6 +20,18 @@ public class Pedido {
         this.items = items;
         this.comentario = comentario;
     }
+
+    public Dispositivo getDispositivo() {
+        return dispositivo;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public String getComentario() {
+        return comentario;
+    }
     
     
 }

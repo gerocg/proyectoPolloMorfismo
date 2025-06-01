@@ -4,6 +4,7 @@
  */
 package controladores;
 
+import java.util.ArrayList;
 import java.util.List;
 import modelo.Ingrediente;
 import modelo.Insumo;
@@ -15,4 +16,18 @@ import modelo.Insumo;
 public class ServicioInsumos {
     private List<Insumo> insumos;
     private List<Ingrediente> ingredientes;
+
+    public ServicioInsumos() {
+        this.insumos = new ArrayList<>();
+        this.ingredientes = new ArrayList<>();
+    }
+    
+    public void agregar (Insumo insumo){
+        this.insumos.add(insumo);
+    }
+    
+    public void agregar (Ingrediente ingrediente){
+        this.ingredientes.add(ingrediente);
+    }
+    
 }
