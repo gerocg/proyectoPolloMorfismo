@@ -29,4 +29,8 @@ public class ServicioDispositivos {
     public void agregar (Pedido p){
         this.pedidos.add(p);
     }
+    
+    public List<Dispositivo> getDispositivos(){
+        return dispositivos;
+    }
 }

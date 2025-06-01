@@ -37,4 +37,8 @@ public class ServicioItems {
     public void agregar(UnidadProcesadora u){
         unidadesProcesadoras.add(u);
     }
+    
+    public void agregarItemACategoria(Categoria c, Item i){
+        c.agregarItemAMenu(i);
+    }
 }

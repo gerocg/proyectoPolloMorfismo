@@ -4,6 +4,7 @@
  */
 package modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,5 +13,16 @@ import java.util.List;
  */
 public class Categoria {
     private String nombre;
-    private MenuItems menu;
+    private List<Item> menu;
+
+    public Categoria(String nombre) {
+        this.nombre = nombre;
+        this.menu = new ArrayList<>();
+    }
+    
+    public void agregarItemAMenu(Item item){
+        this.menu.add(item);
+    }
+    
+    
 }

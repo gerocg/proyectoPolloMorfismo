@@ -16,5 +16,15 @@ public class Item {
     private List<Ingrediente> ingredientes;
     private UnidadProcesadora unidad;
     private Categoria categoria;
+
+    public Item(String nombre, float precio, List<Ingrediente> ingredientes, UnidadProcesadora unidad, Categoria categoria) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.ingredientes = ingredientes;
+        this.unidad = unidad;
+        this.categoria = categoria;
+    }
+    
+    
     
 }

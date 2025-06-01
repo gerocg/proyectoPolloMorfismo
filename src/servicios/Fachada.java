@@ -71,4 +71,9 @@ public class Fachada {
     public void agregar (Pedido p){
         sDispositivos.agregar(p);
     }
+    
+    public void agregarItemACategoria(Categoria c, Item i){
+        sItems.agregarItemACategoria(c, i);
+    }
 }
+

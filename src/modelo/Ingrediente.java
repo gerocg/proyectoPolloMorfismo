@@ -11,4 +11,11 @@ package modelo;
 public class Ingrediente {
     private int cantidad;
     private Insumo insumo;
+
+    public Ingrediente(int cantidad, Insumo insumo) {
+        this.cantidad = cantidad;
+        this.insumo = insumo;
+    }
+    
+    
 }

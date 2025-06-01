@@ -8,14 +8,15 @@ package modelo;
  *
  * @author Gerónimo
  */
-public class Insumo {
-    private String nombre;
-    private int stock;
-    private int stockMinimo;
+public class DeLaCasa extends TipoCliente{
 
-    public Insumo(String nombre, int stock) {
-        this.nombre = nombre;
-        this.stock = stock;
+    public DeLaCasa() {
+        super("De la casa");
+    }
+
+    @Override
+    public void cobrar(Cliente cliente) {
+
     }
     
     
