@@ -16,5 +16,5 @@ public abstract class TipoCliente {
         this.nombre = nombre;
     }
     
-    public abstract void cobrar();
+    public abstract void cobrar(Cliente cliente);
 }

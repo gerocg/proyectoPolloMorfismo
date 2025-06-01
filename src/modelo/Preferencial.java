@@ -15,7 +15,7 @@ public class Preferencial extends TipoCliente{
     }
 
     @Override
-    public void cobrar() {
+    public void cobrar(Cliente cliente) {
         
     }
     

@@ -21,7 +21,9 @@ public class Cliente {
         this.password = password;
     }
     
-    
+    public void cobrarCliente (){
+        this.tipo.cobrar(this);
+    }
     
     
 }
