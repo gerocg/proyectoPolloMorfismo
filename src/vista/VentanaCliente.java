@@ -4,7 +4,7 @@
  */
 package vista;
 
-import javax.swing.BorderFactory;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -12,12 +12,20 @@ import javax.swing.BorderFactory;
  */
 public class VentanaCliente extends javax.swing.JFrame {
 
+    private DefaultTableModel modeloTabla;
+
     /**
      * Creates new form VentanaCliente
      */
     public VentanaCliente() {
         initComponents();
-        jpIdentificarse.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),"Identificarse"));
+        setTitle("Ventana Cliente | Usuario: -----");
+        setLocationRelativeTo(null);
+        modeloTabla = new DefaultTableModel(
+                new Object[]{"Item", "Comentario", "Estado", "Unidad", "Gestor", "Precio"},
+                0 // cantidad de filas inicial
+        );
+        tablaPedidosServicio.setModel(modeloTabla);
     }
 
     /**
@@ -48,20 +56,20 @@ public class VentanaCliente extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnAgregarPedido = new javax.swing.JButton();
+        btnEliminarPedido = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaPedidosServicio = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jpIdentificarse.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jpIdentificarse.setToolTipText("Identificarse");
@@ -152,14 +160,14 @@ public class VentanaCliente extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane3.setViewportView(jTextArea1);
 
-        jButton1.setText("Agregar pedido");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarPedido.setText("Agregar pedido");
+        btnAgregarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAgregarPedidoActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Eliminar pedido");
+        btnEliminarPedido.setText("Eliminar pedido");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -188,9 +196,9 @@ public class VentanaCliente extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jButton1)
+                                        .addComponent(btnAgregarPedido)
                                         .addGap(29, 29, 29)
-                                        .addComponent(jButton2)))
+                                        .addComponent(btnEliminarPedido)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
@@ -214,8 +222,8 @@ public class VentanaCliente extends javax.swing.JFrame {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))))
+                            .addComponent(btnAgregarPedido)
+                            .addComponent(btnEliminarPedido))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -227,7 +235,7 @@ public class VentanaCliente extends javax.swing.JFrame {
 
         jButton4.setText("Finalizar Servicio");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaPedidosServicio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -238,7 +246,7 @@ public class VentanaCliente extends javax.swing.JFrame {
                 "Item", "Comentario", "Estado", "Unidad", "Gestor", "Precio"
             }
         ));
-        jScrollPane4.setViewportView(jTable1);
+        jScrollPane4.setViewportView(tablaPedidosServicio);
 
         jLabel9.setText("Monto total: $0");
 
@@ -337,48 +345,16 @@ public class VentanaCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAgregarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPedidoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAgregarPedidoActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentanaCliente().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnAgregarPedido;
+    private javax.swing.JButton btnEliminarPedido;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -403,10 +379,10 @@ public class VentanaCliente extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel jpIdentificarse;
     private javax.swing.JPasswordField tPassword;
     private javax.swing.JTextField tUsuario;
+    private javax.swing.JTable tablaPedidosServicio;
     // End of variables declaration//GEN-END:variables
 }

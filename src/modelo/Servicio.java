@@ -4,15 +4,20 @@
  */
 package modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Gerónimo
  */
 public class Servicio {
     private Cliente cliente;
+    private List<Pedido> pedidos;
 
     public Servicio(Cliente cliente) {
         this.cliente = cliente;
+        this.pedidos = new ArrayList<>();
     }
     
 }
