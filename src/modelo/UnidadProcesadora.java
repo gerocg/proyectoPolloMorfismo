@@ -18,4 +18,8 @@ public abstract class UnidadProcesadora {
     
     public abstract void procesar();
     
+    public String getNombre(){
+        return nombre;
+    }
+    
 }

@@ -8,6 +8,8 @@ import InterfacesVistas.VistaCliente;
 import estados.EstadoDispositivoDisponible;
 import modelo.Cliente;
 import modelo.Dispositivo;
+import modelo.Item;
+import modelo.Pedido;
 import modelo.Servicio;
 import servicios.Fachada;
 
@@ -59,6 +61,29 @@ public class ControladorVistaCliente {
         this.dispositivo = null;
         vista.cargarTituloInicial();
         vista.mensajeSistema("Servicio finalizado correctamente.");
+    }
+
+    public void agregarPedido(Item itemSeleccionado, String text) {
+        if (itemSeleccionado == null) {
+            vista.mensajeError("Seleccione un item primero.");
+        } else {
+            Pedido p = new Pedido(itemSeleccionado, text, itemSeleccionado.getPrecio());
+            vista.agregarPedido(p);
+        }
+    }
+
+    public void eliminarPedido(int fila, Pedido pedido) {
+        if (pedido == null || fila < 0) {
+            vista.mensajeError("Seleccione un pedido.");
+        } else {
+            try {
+                pedido.getEstado().quitarPedido();
+                vista.quitarFilaPedido(fila);
+            } catch (Exception e) {
+                vista.mensajeError(e.getMessage());
+            }
+        }
+
     }
 
 }

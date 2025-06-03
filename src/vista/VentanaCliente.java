@@ -8,6 +8,7 @@ import InterfacesVistas.VistaCliente;
 import controladores.ControladorVistaCliente;
 import java.awt.Color;
 import java.awt.Component;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -16,19 +17,22 @@ import javax.swing.table.DefaultTableModel;
 import modelo.Categoria;
 import modelo.Dispositivo;
 import modelo.Item;
+import modelo.Pedido;
 import modelo.Servicio;
 
 /**
  *
  * @author Gerónimo
  */
-public class VentanaCliente extends javax.swing.JFrame implements VistaCliente{
+public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
 
     private DefaultTableModel modeloTabla;
     private Servicio servicio;
     private Dispositivo dispositivo;
     private Categoria categoriaSeleccionada;
+    private Item itemSeleccionado;
     private ControladorVistaCliente controlador;
+    private List<Pedido> pedidos;
 
     /**
      * Creates new form VentanaCliente
@@ -36,15 +40,20 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente{
     public VentanaCliente() {
         initComponents();
         cargarTituloInicial();
+        this.pedidos = new ArrayList<>();
         lMensaje.setText("");
         setLocationRelativeTo(null);
         lCategorias.setCellRenderer(new RenderizadorCategorias());
         lItems.setCellRenderer(new RenderizadorItems());
         modeloTabla = new DefaultTableModel(
-                new Object[]{"Item", "Comentario", "Estado", "Unidad", "Gestor", "Precio"},
+                new Object[]{"Pedido", "Item", "Comentario", "Estado", "Unidad", "Gestor", "Precio"},
                 0 // cantidad de filas inicial
         );
         tablaPedidosServicio.setModel(modeloTabla);
+        // Ocultamos la primera columna que contiene el objeto Pedido
+        tablaPedidosServicio.getColumnModel().getColumn(0).setMinWidth(0);
+        tablaPedidosServicio.getColumnModel().getColumn(0).setMaxWidth(0);
+        tablaPedidosServicio.getColumnModel().getColumn(0).setWidth(0);
         this.controlador = new ControladorVistaCliente(this);
     }
 
@@ -75,7 +84,7 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente{
         lItems = new javax.swing.JList<>();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        tComentario = new javax.swing.JTextArea();
         btnAgregarPedido = new javax.swing.JButton();
         btnEliminarPedido = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -172,13 +181,18 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente{
 
         jLabel6.setText("Items:");
 
+        lItems.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lItemsValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(lItems);
 
         jLabel7.setText("Comentario:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane3.setViewportView(jTextArea1);
+        tComentario.setColumns(20);
+        tComentario.setRows(5);
+        jScrollPane3.setViewportView(tComentario);
 
         btnAgregarPedido.setText("Agregar pedido");
         btnAgregarPedido.addActionListener(new java.awt.event.ActionListener() {
@@ -188,6 +202,11 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente{
         });
 
         btnEliminarPedido.setText("Eliminar pedido");
+        btnEliminarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarPedidoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -330,9 +349,11 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente{
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(lMensaje))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(0, 762, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -340,8 +361,8 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente{
                 .addContainerGap()
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lMensaje)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addComponent(lMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -374,36 +395,48 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void cargarTituloInicial(){
+    public void cargarTituloInicial() {
         setTitle("Ventana Cliente | Usuario: -----");
     }
-    
+
     public void cargarDatos(List<Categoria> categorias) {
         lCategorias.setListData(categorias.toArray(new Categoria[categorias.size()]));
     }
-    
-    private void cargarItems(Categoria c){
+
+    private void cargarItems(Categoria c) {
         List<Item> items = c.getMenu();
         lItems.setListData(items.toArray(new Item[items.size()]));
     }
-    
-    public void mostrarTitulo(String titulo){
+
+    public void mostrarTitulo(String titulo) {
         setTitle(titulo);
     }
 
-    public void mensajeSistema(String mensaje){
+    public void mensajeSistema(String mensaje) {
         lMensaje.setText(mensaje);
         lMensaje.setForeground(Color.black);
     }
-    
-    public void mensajeError(String error){
+
+    public void mensajeError(String error) {
         lMensaje.setText(error);
         lMensaje.setForeground(Color.red);
     }
-    
+
     private void btnAgregarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPedidoActionPerformed
-        // TODO add your handling code here:
+        controlador.agregarPedido(itemSeleccionado, tComentario.getText());
+        tComentario.setText("");
     }//GEN-LAST:event_btnAgregarPedidoActionPerformed
+
+    public void agregarPedido(Pedido pedido) {
+        String item = pedido.getItem().getNombre();
+        String comentario = pedido.getComentario();
+        String estadoPedido = pedido.getEstado().getNombre();
+        String unidadProcesadora = pedido.getItem().getUnidad().getNombre();
+        String gestor = (pedido.getGestor() != null) ? pedido.getGestor().getNombreCompleto() : "----";
+        float precio = pedido.getPrecio();
+
+        modeloTabla.addRow(new Object[]{pedido, item, comentario, estadoPedido, unidadProcesadora, gestor, precio});
+    }
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         int numCliente = Integer.parseInt(tUsuario.getText());
@@ -423,8 +456,22 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente{
         controlador.finalizarServicio();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void lItemsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lItemsValueChanged
+        if (!evt.getValueIsAdjusting()) {
+            this.itemSeleccionado = lItems.getSelectedValue();
+            System.out.println(itemSeleccionado.getNombre());
+        }
+    }//GEN-LAST:event_lItemsValueChanged
+
+    private void btnEliminarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPedidoActionPerformed
+        int fila = tablaPedidosServicio.getSelectedRow();
+        controlador.eliminarPedido(fila,(Pedido) modeloTabla.getValueAt(fila, 0));
+    }//GEN-LAST:event_btnEliminarPedidoActionPerformed
+
     
-    
+    public void quitarFilaPedido(int fila){
+        modeloTabla.removeRow(fila);
+    }
     /**
      * @param args the command line arguments
      */
@@ -452,11 +499,11 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente{
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel jpIdentificarse;
     private javax.swing.JList<Categoria> lCategorias;
     private javax.swing.JList<Item> lItems;
     private javax.swing.JLabel lMensaje;
+    private javax.swing.JTextArea tComentario;
     private javax.swing.JPasswordField tPassword;
     private javax.swing.JTextField tUsuario;
     private javax.swing.JTable tablaPedidosServicio;
@@ -479,7 +526,7 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente{
         }
 
     }
-    
+
     private class RenderizadorItems implements ListCellRenderer<Item> {
 
         @Override
@@ -495,6 +542,6 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente{
 
             return label;
         }
-        
+
     }
 }

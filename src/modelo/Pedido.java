@@ -4,6 +4,8 @@
  */
 package modelo;
 
+import estados.EstadoPedido;
+import estados.EstadoPedidoNoConfirmado;
 import java.util.List;
 
 /**
@@ -11,27 +13,59 @@ import java.util.List;
  * @author Gerónimo
  */
 public class Pedido {
-    private Dispositivo dispositivo;
-    private List<Item> items;
+    private Item item;
     private String comentario;
+    private UnidadProcesadora unidad;
+    private Gestor gestor;
+    private float precio;
+    private EstadoPedido estado;
 
-    public Pedido(Dispositivo dispositivo, List<Item> items, String comentario) {
-        this.dispositivo = dispositivo;
-        this.items = items;
+    public Pedido( Item item, String comentario, float precio) {
+        this.item = item;
         this.comentario = comentario;
+        this.precio = precio;
+        this.estado = new EstadoPedidoNoConfirmado(this);
     }
-
-    public Dispositivo getDispositivo() {
-        return dispositivo;
-    }
-
-    public List<Item> getItems() {
-        return items;
+    
+    public Item getItem() {
+        return item;
     }
 
     public String getComentario() {
         return comentario;
     }
+
+    public UnidadProcesadora getUnidad() {
+        return unidad;
+    }
+
+    public Gestor getGestor() {
+        return gestor;
+    }
+
+    public float getPrecio() {
+        return precio;
+    }
+
+    public EstadoPedido getEstado() {
+        return estado;
+    }
+
+    public void setUnidad(UnidadProcesadora unidad) {
+        this.unidad = unidad;
+    }
+
+    public void setGestor(Gestor gestor) {
+        this.gestor = gestor;
+    }
+
+    public void setEstado(EstadoPedido estado) {
+        this.estado = estado;
+    }
+    
+    
+    
+    
     
     
 }

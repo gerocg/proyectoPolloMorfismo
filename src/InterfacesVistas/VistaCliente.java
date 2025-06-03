@@ -6,6 +6,7 @@ package InterfacesVistas;
 
 import java.util.List;
 import modelo.Categoria;
+import modelo.Pedido;
 
 /**
  *
@@ -15,12 +16,16 @@ public interface VistaCliente {
     
     public void cargarDatos(List<Categoria> categorias);
 
-    public void mostrarTitulo(String string);
+    public void mostrarTitulo(String titulo);
 
-    public void mensajeSistema(String string);
+    public void mensajeSistema(String mensaje);
 
-    public void mensajeError(String ya_hay_un_usuario_logeado);
+    public void mensajeError(String error);
     
     public void cargarTituloInicial();
+
+    public void agregarPedido(Pedido p);
+
+    public void quitarFilaPedido(int fila);
     
 }

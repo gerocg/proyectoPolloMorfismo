@@ -4,42 +4,51 @@
  */
 package estados;
 
+import Exceptions.EstadoPedidoException;
 import modelo.Gestor;
+import modelo.Pedido;
+import modelo.UnidadProcesadora;
 
 /**
  *
  * @author Gerónimo
  */
 public class EstadoPedidoFinalizado implements EstadoPedido{
+    
+    private Pedido pedido;
+
+    public EstadoPedidoFinalizado(Pedido pedido) {
+        this.pedido = pedido;
+    }
 
     @Override
-    public void confirmarPedido() {
+    public void confirmarPedido() throws EstadoPedidoException{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void quitarPedido() {
+    public void quitarPedido() throws EstadoPedidoException{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void tomarPedido(Gestor gestor) {
+    public void tomarPedido(Gestor gestor) throws EstadoPedidoException{
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    @Override
+    public void entregarPedido() throws EstadoPedidoException{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void cobrarPedido() {
+    public void finalizarPedido() throws EstadoPedidoException{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void finalizarPedido() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void entregarPedido() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String getNombre() {
+        return "Finalizado";
     }
     
 }

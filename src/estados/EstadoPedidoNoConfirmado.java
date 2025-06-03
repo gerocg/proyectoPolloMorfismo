@@ -4,7 +4,10 @@
  */
 package estados;
 
+import Exceptions.EstadoPedidoException;
 import modelo.Gestor;
+import modelo.Pedido;
+import modelo.UnidadProcesadora;
 
 /**
  *
@@ -12,14 +15,20 @@ import modelo.Gestor;
  */
 public class EstadoPedidoNoConfirmado implements EstadoPedido {
 
-    @Override
-    public void confirmarPedido() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private Pedido pedido;
+
+    public EstadoPedidoNoConfirmado(Pedido p) {
+        this.pedido = p;
     }
 
     @Override
-    public void quitarPedido() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void confirmarPedido() {
+        this.pedido.setEstado(new EstadoPedidoConfirmado(pedido));
+    }
+
+    @Override
+    public void quitarPedido() throws EstadoPedidoException {
+
     }
 
     @Override
@@ -28,7 +37,7 @@ public class EstadoPedidoNoConfirmado implements EstadoPedido {
     }
 
     @Override
-    public void cobrarPedido() {
+    public void entregarPedido() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -38,8 +47,8 @@ public class EstadoPedidoNoConfirmado implements EstadoPedido {
     }
 
     @Override
-    public void entregarPedido() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String getNombre() {
+        return "No confirmado";
     }
-    
+
 }

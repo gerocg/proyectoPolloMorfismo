@@ -4,17 +4,20 @@
  */
 package estados;
 
+import Exceptions.EstadoPedidoException;
 import modelo.Gestor;
+import modelo.UnidadProcesadora;
 
 /**
  *
  * @author Gerónimo
  */
 public interface EstadoPedido {
-    public void confirmarPedido();
-    public void quitarPedido();
-    public void tomarPedido(Gestor gestor);
-    public void cobrarPedido();
-    public void finalizarPedido();
-    public void entregarPedido();
+    public String getNombre();
+    public void confirmarPedido() throws EstadoPedidoException;
+    public void quitarPedido() throws EstadoPedidoException;
+    public void tomarPedido(Gestor gestor) throws EstadoPedidoException;
+    public void entregarPedido() throws EstadoPedidoException;
+    public void finalizarPedido() throws EstadoPedidoException;
+
 }

@@ -1,3 +1,8 @@
-private void btnAgregarPedidoActionPerformed(java.awt.event.ActionEvent evt) {                                                 
-        // TODO add your handling code here:
-    } 
+String item = pedido.getItem().getNombre();
+    String comentario = pedido.getComentario();
+    String estado = pedido.getEstado().getNombre();
+    String unidad = (pedido.getUnidad() != null) ? pedido.getUnidad().getNombre() : "----";
+    String gestor = (pedido.getGestor() != null) ? pedido.getGestor().getNombre() : "----";
+    double precio = pedido.getPrecio();
+
+    modeloTabla.addRow(new Object[]{item, comentario, estado, unidad, gestor, precio});

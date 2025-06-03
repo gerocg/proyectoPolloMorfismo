@@ -22,7 +22,7 @@ public class Comun extends TipoCliente{
 
     @Override
     public Servicio otorgarBeneficios(Servicio servicio) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return servicio;
     }
     
 }
