@@ -16,9 +16,14 @@ import modelo.Servicio;
 public class EstadoDispositivoDisponible implements EstadoDispositivo{
     
     private Dispositivo dispositivo;
+    private String nombre = "Disponible";
 
     public EstadoDispositivoDisponible(Dispositivo dispositivo) {
         this.dispositivo = dispositivo;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
     
     @Override
@@ -41,6 +46,11 @@ public class EstadoDispositivoDisponible implements EstadoDispositivo{
     @Override
     public void finalizarServicio(Servicio servicio) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean estaDisponible() {
+        return true;
     }
 
     

@@ -11,10 +11,18 @@ package modelo;
 
 public abstract class TipoCliente {
     private String nombre;
+    private Cliente cliente;
 
-    public TipoCliente(String nombre) {
+    public TipoCliente(String nombre, Cliente cliente) {
         this.nombre = nombre;
+        this.cliente = cliente;
     }
     
-    public abstract void cobrar(Cliente cliente);
+    public abstract Servicio otorgarBeneficios(Servicio servicio);
+
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public abstract String getBeneficio();
 }

@@ -10,13 +10,20 @@ package modelo;
  */
 public class Frecuente extends TipoCliente{
 
-    public Frecuente() {
-        super("Frecuente");
+    public Frecuente(Cliente cliente) {
+        super("Frecuente", cliente);
+    }
+
+ 
+
+    @Override
+    public String getBeneficio() {
+        return "¡Tendrá todos los cafés consumidos de forma gratuita!";
     }
 
     @Override
-    public void cobrar(Cliente cliente) {
-        
+    public Servicio otorgarBeneficios(Servicio servicio) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

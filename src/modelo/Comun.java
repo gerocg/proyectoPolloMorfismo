@@ -10,13 +10,19 @@ package modelo;
  */
 public class Comun extends TipoCliente{
 
-    public Comun() {
-        super("Comun");
+    public Comun(Cliente cliente) {
+        super("Común", cliente);
+    }
+
+
+    @Override
+    public String getBeneficio() {
+        return "no tendrá ningún beneficio.";
     }
 
     @Override
-    public void cobrar(Cliente cliente) {
-      
+    public Servicio otorgarBeneficios(Servicio servicio) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

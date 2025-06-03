@@ -16,10 +16,16 @@ import modelo.Servicio;
 public class EstadoDispositivoOcupado implements EstadoDispositivo{
     
     private Dispositivo dispositivo;
+    private String nombre = "Ocupado";
 
     public EstadoDispositivoOcupado(Dispositivo dispositivo) {
         this.dispositivo = dispositivo;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+    
 
     @Override
     public Dispositivo identificarse(Cliente c) {
@@ -38,7 +44,14 @@ public class EstadoDispositivoOcupado implements EstadoDispositivo{
 
     @Override
     public void finalizarServicio(Servicio servicio) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        this.dispositivo.setServicioActual(null);
+        this.dispositivo.setEstado(new EstadoDispositivoDisponible(this.dispositivo));
+    }
+
+    @Override
+    public boolean estaDisponible() {
+        return false;
     }
     
 }

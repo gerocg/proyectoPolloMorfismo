@@ -28,6 +28,10 @@ public class Dispositivo {
         this.servicioHistorico = new ArrayList<>();
     }
 
+    public EstadoDispositivo getEstado() {
+        return estado;
+    }
+    
     public void setServicioActual(Servicio servicioActual) {
         this.servicioActual = servicioActual;
         this.estado = new EstadoDispositivoOcupado(this);
@@ -57,6 +61,14 @@ public class Dispositivo {
     
     public void setEstado (EstadoDispositivo estado){
         this.estado = estado;
+    }
+    
+    public void finalizarServicio(){
+        this.estado.finalizarServicio(servicioActual);
+    }
+
+    public boolean estaDisponible() {
+        return estado.estaDisponible();
     }
     
     

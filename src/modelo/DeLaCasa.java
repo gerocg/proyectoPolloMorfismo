@@ -10,13 +10,18 @@ package modelo;
  */
 public class DeLaCasa extends TipoCliente{
 
-    public DeLaCasa() {
-        super("De la casa");
+    public DeLaCasa(Cliente cliente) {
+        super("De la casa", cliente);
     }
 
     @Override
-    public void cobrar(Cliente cliente) {
+    public String getBeneficio() {
+        return "Tendrá $500 de descuento por el servicio.";
+    }
 
+    @Override
+    public Servicio otorgarBeneficios(Servicio servicio) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     

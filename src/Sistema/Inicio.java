@@ -102,7 +102,6 @@ public class Inicio {
         Insumo i32 = new Insumo("Masa de pizza", 100);
         Insumo i33 = new Insumo("Caramelo", 28);
         Insumo i34 = new Insumo("Crema", 200);
-        
 
         fachada.agregar(i1);
         fachada.agregar(i2);
@@ -286,14 +285,22 @@ public class Inicio {
         };
 
         for (int i = 0; i < nombresClientes.length; i++) {
-            TipoCliente tipo;
-            tipo = switch (i % 4) {
-                case 0 -> new Comun();
-                case 1 -> new Frecuente();
-                case 2 -> new Preferencial();
-                default -> new DeLaCasa();
+            String nombre = nombresClientes[i];
+            int id = i + 1;
+            Cliente c = new Cliente(null, nombre, id, "pass" + id); // TipoCliente null por ahora
+
+            TipoCliente tipo = switch (i % 4) {
+                case 0 ->
+                    new Comun(c);
+                case 1 ->
+                    new Frecuente(c);
+                case 2 ->
+                    new Preferencial(c);
+                default ->
+                    new DeLaCasa(c);
             };
-            Cliente c = new Cliente(tipo, nombresClientes[i], i + 1, "pass" + (i + 1));
+
+            c.setTipoCliente(tipo); // Asignás el tipo ahora
             fachada.agregar(c);
         }
 

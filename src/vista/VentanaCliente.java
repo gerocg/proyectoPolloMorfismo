@@ -4,6 +4,8 @@
  */
 package vista;
 
+import InterfacesVistas.VistaCliente;
+import controladores.ControladorVistaCliente;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.List;
@@ -12,41 +14,38 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.Categoria;
-import modelo.Cliente;
 import modelo.Dispositivo;
 import modelo.Item;
 import modelo.Servicio;
-import servicios.Fachada;
 
 /**
  *
  * @author Gerónimo
  */
-public class VentanaCliente extends javax.swing.JFrame {
+public class VentanaCliente extends javax.swing.JFrame implements VistaCliente{
 
     private DefaultTableModel modeloTabla;
-    private Fachada fachada = Fachada.getInstancia();
     private Servicio servicio;
     private Dispositivo dispositivo;
     private Categoria categoriaSeleccionada;
+    private ControladorVistaCliente controlador;
 
     /**
      * Creates new form VentanaCliente
      */
     public VentanaCliente() {
         initComponents();
-        setTitle("Ventana Cliente | Usuario: -----");
+        cargarTituloInicial();
         lMensaje.setText("");
         setLocationRelativeTo(null);
         lCategorias.setCellRenderer(new RenderizadorCategorias());
         lItems.setCellRenderer(new RenderizadorItems());
-        cargarDatos();
         modeloTabla = new DefaultTableModel(
                 new Object[]{"Item", "Comentario", "Estado", "Unidad", "Gestor", "Precio"},
                 0 // cantidad de filas inicial
         );
         tablaPedidosServicio.setModel(modeloTabla);
-
+        this.controlador = new ControladorVistaCliente(this);
     }
 
     /**
@@ -259,6 +258,11 @@ public class VentanaCliente extends javax.swing.JFrame {
         jButton3.setText("Confirmar pedido");
 
         jButton4.setText("Finalizar Servicio");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         tablaPedidosServicio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -370,36 +374,40 @@ public class VentanaCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cargarDatos() {
-        List<Categoria> listaCategorias = fachada.getCategorias();
-        lCategorias.setListData(listaCategorias.toArray(new Categoria[listaCategorias.size()]));
+    public void cargarTituloInicial(){
+        setTitle("Ventana Cliente | Usuario: -----");
+    }
+    
+    public void cargarDatos(List<Categoria> categorias) {
+        lCategorias.setListData(categorias.toArray(new Categoria[categorias.size()]));
     }
     
     private void cargarItems(Categoria c){
         List<Item> items = c.getMenu();
         lItems.setListData(items.toArray(new Item[items.size()]));
     }
+    
+    public void mostrarTitulo(String titulo){
+        setTitle(titulo);
+    }
 
+    public void mensajeSistema(String mensaje){
+        lMensaje.setText(mensaje);
+        lMensaje.setForeground(Color.black);
+    }
+    
+    public void mensajeError(String error){
+        lMensaje.setText(error);
+        lMensaje.setForeground(Color.red);
+    }
+    
     private void btnAgregarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPedidoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarPedidoActionPerformed
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         int numCliente = Integer.parseInt(tUsuario.getText());
-        Cliente clienteLogeado = fachada.ingresar(numCliente, new String(tPassword.getPassword()));
-        if (clienteLogeado != null) {
-            if (this.dispositivo == null) {
-                this.dispositivo = fachada.ingresarCliente(clienteLogeado);
-                System.out.println("PRIMERO Dispositivo: " + dispositivo.getId());
-                servicio = dispositivo.getServicioActual();
-                setTitle("Ventana Cliente | Usuario: " + clienteLogeado.getNombreCompleto());
-                lMensaje.setText("¡Bienvenido/a " + clienteLogeado.getNombreCompleto() + "!");
-            } else if (dispositivo != null) {
-                lMensaje.setText("Ya hay un usuario logeado.");
-            }
-        } else {
-            lMensaje.setText("Datos incorrectos.");
-        }
+        controlador.ingresar(numCliente, new String(tPassword.getPassword()));
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void lCategoriasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lCategoriasValueChanged
@@ -410,6 +418,10 @@ public class VentanaCliente extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_lCategoriasValueChanged
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        controlador.finalizarServicio();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     
     

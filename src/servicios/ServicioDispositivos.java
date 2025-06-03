@@ -4,6 +4,7 @@
  */
 package servicios;
 
+import Exceptions.DispositivoException;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Cliente;
@@ -16,6 +17,7 @@ import modelo.Servicio;
  * @author Gerónimo
  */
 public class ServicioDispositivos {
+
     private List<Dispositivo> dispositivos;
     private List<Pedido> pedidos;
     private List<Servicio> servicios;
@@ -25,35 +27,39 @@ public class ServicioDispositivos {
         this.pedidos = new ArrayList<>();
         this.servicios = new ArrayList<>();
     }
-    
-    public void agregar (Dispositivo d){
+
+    public void agregar(Dispositivo d) {
         this.dispositivos.add(d);
     }
-    
-    public void agregar (Pedido p){
+
+    public void agregar(Pedido p) {
         this.pedidos.add(p);
     }
-    
-    public List<Dispositivo> getDispositivos(){
+
+    public List<Dispositivo> getDispositivos() {
         return dispositivos;
     }
-    
-    public void agregar (Servicio s){
+
+    public void agregar(Servicio s) {
         this.servicios.add(s);
     }
-    
-    public void agregarAServicio(Cliente c, Servicio s){
+
+    public void agregarAServicio(Cliente c, Servicio s) {
         s.agregarCliente(c);
     }
 
-    
-
-    public Dispositivo ingresarClienteADispositivo(Cliente cliente) {
-        for(Dispositivo d : this.dispositivos){
-            d.identificarse(cliente);
-            return d;
+    public Dispositivo ingresarClienteADispositivo(Cliente cliente) throws DispositivoException {
+        for (Dispositivo d : this.dispositivos) {
+            if (d.estaDisponible()) {
+                d.identificarse(cliente);
+                return d;
+            }
         }
-        return null;
+        throw new DispositivoException("No hay dispositivos disponibles.");
     }
-    
+
+    void finalizarServicio(Dispositivo dispositivo) {
+        dispositivo.finalizarServicio();
+    }
+
 }

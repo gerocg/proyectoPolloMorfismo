@@ -10,13 +10,18 @@ package modelo;
  */
 public class Preferencial extends TipoCliente{
 
-    public Preferencial() {
-        super("Preferencial");
+    public Preferencial(Cliente cliente) {
+        super("Preferencial", cliente);
     }
 
     @Override
-    public void cobrar(Cliente cliente) {
-        
+    public String getBeneficio() {
+        return "Tendrá todas las aguas minerales de forma gratuita. Además, si el costo del servicio supera los $2000, tendrá un 5% de descuento.";
+    }
+
+    @Override
+    public Servicio otorgarBeneficios(Servicio servicio) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

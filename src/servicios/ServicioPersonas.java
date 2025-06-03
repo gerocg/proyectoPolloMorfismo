@@ -4,6 +4,7 @@
  */
 package servicios;
 
+import Exceptions.ClienteIngresadoException;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Cliente;
@@ -14,6 +15,7 @@ import modelo.Gestor;
  * @author Gerónimo
  */
 public class ServicioPersonas {
+
     private List<Cliente> clientes;
     private List<Gestor> gestores;
     private List<Cliente> clientesIngresados;
@@ -25,54 +27,66 @@ public class ServicioPersonas {
         this.clientesIngresados = new ArrayList<>();
         this.gestoresIngresados = new ArrayList<>();
     }
-    
-    public void agregar(Cliente c){
+
+    public void agregar(Cliente c) {
         clientes.add(c);
     }
-    
-    public void agregar(Gestor g){
+
+    public void agregar(Gestor g) {
         gestores.add(g);
     }
 
-    public Cliente ingresar(int numCliente, String password){
+    public Cliente ingresar(int numCliente, String password) throws ClienteIngresadoException {
         Cliente cliente = loginCliente(numCliente, password, this.clientes);
-        if (cliente != null){
-            clientesIngresados.add(cliente);
-            Fachada.getInstancia().ingresarClienteADispositivo(cliente);
-            System.out.println("Ingresado");
+        if (cliente == null) {
+            throw new ClienteIngresadoException("Datos incorrectos.");
         }
+        if (clientesIngresados.contains(cliente)) {
+            throw new ClienteIngresadoException("El usuario ya ha sido ingresado.");
+        }
+        clientesIngresados.add(cliente);
+        System.out.println("Ingresado");
         return cliente;
     }
 
     private Cliente loginCliente(int numCliente, String password, List<Cliente> clientes) {
-        if( numCliente < 0 || password == null || password.isEmpty()) 
+        if (numCliente < 0 || password == null || password.isEmpty()) {
             return null;
-        
-        for (Cliente c : clientes){
-            if(c.getNumCliente() == numCliente && c.isPasswordValid(password))
+        }
+
+        for (Cliente c : clientes) {
+            if (c.getNumCliente() == numCliente && c.isPasswordValid(password)) {
                 return c;
+            }
         }
         return null;
     }
-    
-    public Gestor ingresar(String usuario, String password){
+
+    public Gestor ingresar(String usuario, String password) {
         Gestor gestor = loginGestor(usuario, password, this.gestores);
-        if (gestor != null){
+        if (gestor != null) {
             gestoresIngresados.add(gestor);
         }
         return gestor;
     }
 
     private Gestor loginGestor(String usuario, String password, List<Gestor> gestores) {
-        if( usuario == null || usuario.isEmpty()|| password == null || password.isEmpty()) 
+        if (usuario == null || usuario.isEmpty() || password == null || password.isEmpty()) {
             return null;
-        
-        for (Gestor g : gestores){
-            if(g.getUsuario().equals(usuario) && g.isPasswordValid(password))
+        }
+
+        for (Gestor g : gestores) {
+            if (g.getUsuario().equals(usuario) && g.isPasswordValid(password)) {
                 return g;
+            }
         }
         return null;
     }
-    
-    
+
+    public void finalizarSesion(Cliente cliente) {
+        if (clientesIngresados.contains(cliente)) {
+            clientesIngresados.remove(cliente);
+        }
+    }
+
 }

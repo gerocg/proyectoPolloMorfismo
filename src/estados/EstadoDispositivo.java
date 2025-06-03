@@ -18,4 +18,6 @@ public interface EstadoDispositivo {
     public void realizarPedido(Pedido pedido);
     public void quitarPedido(Pedido pedido);
     public void finalizarServicio(Servicio servicio);
+    public String getNombre();
+    public boolean estaDisponible();
 }

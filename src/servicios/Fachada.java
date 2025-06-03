@@ -4,6 +4,8 @@
  */
 package servicios;
 
+import Exceptions.ClienteIngresadoException;
+import Exceptions.DispositivoException;
 import java.util.List;
 import modelo.Categoria;
 import modelo.Cliente;
@@ -78,7 +80,7 @@ public class Fachada {
         sItems.agregarItemACategoria(c, i);
     }
     
-    public Cliente ingresar(int numCliente, String password){
+    public Cliente ingresar(int numCliente, String password) throws ClienteIngresadoException{
        return sPersonas.ingresar(numCliente, password);
     }
     
@@ -90,16 +92,24 @@ public class Fachada {
         sDispositivos.agregarAServicio(clienteLogeado, servicio);
     }
 
-    void ingresarClienteADispositivo(Cliente cliente) {
+    void ingresarClienteADispositivo(Cliente cliente) throws DispositivoException {
         sDispositivos.ingresarClienteADispositivo(cliente);
     }
 
-    public Dispositivo ingresarCliente(Cliente clienteLogeado) {
+    public Dispositivo ingresarCliente(Cliente clienteLogeado) throws DispositivoException {
         return sDispositivos.ingresarClienteADispositivo(clienteLogeado);
     }
 
     public List<Categoria> getCategorias() {
         return sItems.getCategorias();
+    }
+
+    public void finalizarServicio( Dispositivo dispositivo) {
+        sDispositivos.finalizarServicio( dispositivo);
+    }
+
+    public void finalizarSesion(Cliente cliente) {
+        sPersonas.finalizarSesion(cliente);
     }
 
 }

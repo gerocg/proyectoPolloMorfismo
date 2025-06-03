@@ -20,10 +20,6 @@ public class Cliente {
         this.numCliente = numCliente;
         this.password = password;
     }
-    
-    public void cobrarCliente (){
-        this.tipo.cobrar(this);
-    }
 
     public TipoCliente getTipo() {
         return tipo;
@@ -41,6 +37,9 @@ public class Cliente {
         return this.password.equals(pass);
     }
     
+    public void setTipoCliente(TipoCliente tipo){
+        this.tipo = tipo;
+    }
     
     
     
