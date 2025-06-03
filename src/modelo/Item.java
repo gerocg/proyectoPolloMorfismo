@@ -24,6 +24,26 @@ public class Item {
         this.unidad = unidad;
         this.categoria = categoria;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public float getPrecio() {
+        return precio;
+    }
+
+    public List<Ingrediente> getIngredientes() {
+        return ingredientes;
+    }
+
+    public UnidadProcesadora getUnidad() {
+        return unidad;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
     
     
     

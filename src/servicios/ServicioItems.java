@@ -41,4 +41,8 @@ public class ServicioItems {
     public void agregarItemACategoria(Categoria c, Item i){
         c.agregarItemAMenu(i);
     }
+
+    public List<Categoria> getCategorias() {
+        return this.categorias;
+    }
 }

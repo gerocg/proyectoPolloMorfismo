@@ -4,6 +4,7 @@
  */
 package servicios;
 
+import java.util.List;
 import modelo.Categoria;
 import modelo.Cliente;
 import modelo.Dispositivo;
@@ -96,5 +97,10 @@ public class Fachada {
     public Dispositivo ingresarCliente(Cliente clienteLogeado) {
         return sDispositivos.ingresarClienteADispositivo(clienteLogeado);
     }
+
+    public List<Categoria> getCategorias() {
+        return sItems.getCategorias();
+    }
+
 }
 

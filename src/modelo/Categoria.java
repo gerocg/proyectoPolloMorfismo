@@ -23,6 +23,15 @@ public class Categoria {
     public void agregarItemAMenu(Item item){
         this.menu.add(item);
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public List<Item> getMenu() {
+        return menu;
+    }
+    
     
     
 }

@@ -4,9 +4,17 @@
  */
 package vista;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.util.List;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import modelo.Categoria;
 import modelo.Cliente;
 import modelo.Dispositivo;
+import modelo.Item;
 import modelo.Servicio;
 import servicios.Fachada;
 
@@ -20,6 +28,7 @@ public class VentanaCliente extends javax.swing.JFrame {
     private Fachada fachada = Fachada.getInstancia();
     private Servicio servicio;
     private Dispositivo dispositivo;
+    private Categoria categoriaSeleccionada;
 
     /**
      * Creates new form VentanaCliente
@@ -29,11 +38,15 @@ public class VentanaCliente extends javax.swing.JFrame {
         setTitle("Ventana Cliente | Usuario: -----");
         lMensaje.setText("");
         setLocationRelativeTo(null);
+        lCategorias.setCellRenderer(new RenderizadorCategorias());
+        lItems.setCellRenderer(new RenderizadorItems());
+        cargarDatos();
         modeloTabla = new DefaultTableModel(
                 new Object[]{"Item", "Comentario", "Estado", "Unidad", "Gestor", "Precio"},
                 0 // cantidad de filas inicial
         );
         tablaPedidosServicio.setModel(modeloTabla);
+
     }
 
     /**
@@ -56,11 +69,11 @@ public class VentanaCliente extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        lCategorias = new javax.swing.JList<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        lItems = new javax.swing.JList<>();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -138,12 +151,12 @@ public class VentanaCliente extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        lCategorias.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lCategoriasValueChanged(evt);
+            }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(lCategorias);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -160,12 +173,7 @@ public class VentanaCliente extends javax.swing.JFrame {
 
         jLabel6.setText("Items:");
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(lItems);
 
         jLabel7.setText("Comentario:");
 
@@ -190,29 +198,31 @@ public class VentanaCliente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6)
-                        .addGap(85, 85, 85))
+                        .addGap(85, 826, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel4)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(btnAgregarPedido)
-                                        .addGap(29, 29, 29)
-                                        .addComponent(btnEliminarPedido)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(btnAgregarPedido)
+                                                .addGap(29, 29, 29)
+                                                .addComponent(btnEliminarPedido)))
+                                        .addGap(0, 158, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jScrollPane3))))
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -226,18 +236,20 @@ public class VentanaCliente extends javax.swing.JFrame {
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(12, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
+                        .addGap(8, 8, 8)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAgregarPedido)
-                            .addComponent(btnEliminarPedido))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnEliminarPedido))
+                        .addGap(16, 16, 16))))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -358,6 +370,16 @@ public class VentanaCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cargarDatos() {
+        List<Categoria> listaCategorias = fachada.getCategorias();
+        lCategorias.setListData(listaCategorias.toArray(new Categoria[listaCategorias.size()]));
+    }
+    
+    private void cargarItems(Categoria c){
+        List<Item> items = c.getMenu();
+        lItems.setListData(items.toArray(new Item[items.size()]));
+    }
+
     private void btnAgregarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPedidoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarPedidoActionPerformed
@@ -366,7 +388,7 @@ public class VentanaCliente extends javax.swing.JFrame {
         int numCliente = Integer.parseInt(tUsuario.getText());
         Cliente clienteLogeado = fachada.ingresar(numCliente, new String(tPassword.getPassword()));
         if (clienteLogeado != null) {
-            if (this.dispositivo == null){
+            if (this.dispositivo == null) {
                 this.dispositivo = fachada.ingresarCliente(clienteLogeado);
                 System.out.println("PRIMERO Dispositivo: " + dispositivo.getId());
                 servicio = dispositivo.getServicioActual();
@@ -380,6 +402,17 @@ public class VentanaCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
+    private void lCategoriasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lCategoriasValueChanged
+        if (!evt.getValueIsAdjusting()) {
+            this.categoriaSeleccionada = lCategorias.getSelectedValue();
+            cargarItems(categoriaSeleccionada);
+            System.out.println(categoriaSeleccionada.getNombre());
+        }
+
+    }//GEN-LAST:event_lCategoriasValueChanged
+
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -399,8 +432,6 @@ public class VentanaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -411,9 +442,47 @@ public class VentanaCliente extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel jpIdentificarse;
+    private javax.swing.JList<Categoria> lCategorias;
+    private javax.swing.JList<Item> lItems;
     private javax.swing.JLabel lMensaje;
     private javax.swing.JPasswordField tPassword;
     private javax.swing.JTextField tUsuario;
     private javax.swing.JTable tablaPedidosServicio;
     // End of variables declaration//GEN-END:variables
+
+    private class RenderizadorCategorias implements ListCellRenderer<Categoria> {
+
+        @Override
+        public Component getListCellRendererComponent(JList<? extends Categoria> list, Categoria categoria, int index, boolean isSelected, boolean cellHasFocus) {
+            JLabel label = new JLabel();
+            label.setText(categoria.getNombre());
+
+            if (isSelected) {
+                label.setForeground(Color.blue);
+            } else {
+                label.setForeground(Color.black);
+            }
+
+            return label;
+        }
+
+    }
+    
+    private class RenderizadorItems implements ListCellRenderer<Item> {
+
+        @Override
+        public Component getListCellRendererComponent(JList<? extends Item> list, Item item, int index, boolean isSelected, boolean cellHasFocus) {
+            JLabel label = new JLabel();
+            label.setText(item.getNombre());
+
+            if (isSelected) {
+                label.setForeground(Color.blue);
+            } else {
+                label.setForeground(Color.black);
+            }
+
+            return label;
+        }
+        
+    }
 }
