@@ -24,6 +24,24 @@ public class Cliente {
     public void cobrarCliente (){
         this.tipo.cobrar(this);
     }
+
+    public TipoCliente getTipo() {
+        return tipo;
+    }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public int getNumCliente() {
+        return numCliente;
+    }
+
+    public boolean isPasswordValid(String pass){
+        return this.password.equals(pass);
+    }
+    
+    
     
     
 }

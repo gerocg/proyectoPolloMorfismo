@@ -14,10 +14,32 @@ import java.util.List;
 public class Servicio {
     private Cliente cliente;
     private List<Pedido> pedidos;
+    private Dispositivo dispositivo;
 
-    public Servicio(Cliente cliente) {
+    public Servicio(Cliente cliente, Dispositivo dispositivo) {
         this.cliente = cliente;
         this.pedidos = new ArrayList<>();
+        this.dispositivo = dispositivo;
     }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public Dispositivo getDispositivo() {
+        return dispositivo;
+    }
+
+    public void agregarCliente(Cliente c) {
+        if (cliente == null){
+            this.cliente = c;
+        }
+    }
+    
+    
     
 }

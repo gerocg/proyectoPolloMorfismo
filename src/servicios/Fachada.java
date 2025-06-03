@@ -12,6 +12,7 @@ import modelo.Ingrediente;
 import modelo.Insumo;
 import modelo.Item;
 import modelo.Pedido;
+import modelo.Servicio;
 import modelo.UnidadProcesadora;
 
 /**
@@ -74,6 +75,26 @@ public class Fachada {
     
     public void agregarItemACategoria(Categoria c, Item i){
         sItems.agregarItemACategoria(c, i);
+    }
+    
+    public Cliente ingresar(int numCliente, String password){
+       return sPersonas.ingresar(numCliente, password);
+    }
+    
+    public Gestor ingresar(String usuario, String password){
+        return sPersonas.ingresar(usuario, password);
+    }
+
+    public void agregarAServicio(Cliente clienteLogeado, Servicio servicio) {
+        sDispositivos.agregarAServicio(clienteLogeado, servicio);
+    }
+
+    void ingresarClienteADispositivo(Cliente cliente) {
+        sDispositivos.ingresarClienteADispositivo(cliente);
+    }
+
+    public Dispositivo ingresarCliente(Cliente clienteLogeado) {
+        return sDispositivos.ingresarClienteADispositivo(clienteLogeado);
     }
 }
 

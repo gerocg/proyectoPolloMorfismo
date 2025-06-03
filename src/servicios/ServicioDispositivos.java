@@ -6,8 +6,10 @@ package servicios;
 
 import java.util.ArrayList;
 import java.util.List;
+import modelo.Cliente;
 import modelo.Dispositivo;
 import modelo.Pedido;
+import modelo.Servicio;
 
 /**
  *
@@ -16,10 +18,12 @@ import modelo.Pedido;
 public class ServicioDispositivos {
     private List<Dispositivo> dispositivos;
     private List<Pedido> pedidos;
+    private List<Servicio> servicios;
 
     public ServicioDispositivos() {
         this.dispositivos = new ArrayList<>();
         this.pedidos = new ArrayList<>();
+        this.servicios = new ArrayList<>();
     }
     
     public void agregar (Dispositivo d){
@@ -33,4 +37,23 @@ public class ServicioDispositivos {
     public List<Dispositivo> getDispositivos(){
         return dispositivos;
     }
+    
+    public void agregar (Servicio s){
+        this.servicios.add(s);
+    }
+    
+    public void agregarAServicio(Cliente c, Servicio s){
+        s.agregarCliente(c);
+    }
+
+    
+
+    public Dispositivo ingresarClienteADispositivo(Cliente cliente) {
+        for(Dispositivo d : this.dispositivos){
+            d.identificarse(cliente);
+            return d;
+        }
+        return null;
+    }
+    
 }

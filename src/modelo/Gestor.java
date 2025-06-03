@@ -20,5 +20,21 @@ public class Gestor {
         this.nombreCompleto = nombreCompleto;
         this.unidad = unidad;
     }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public UnidadProcesadora getUnidad() {
+        return unidad;
+    }
+    
+    public boolean isPasswordValid(String pass){
+        return this.password.equals(pass);
+    }
     
 }

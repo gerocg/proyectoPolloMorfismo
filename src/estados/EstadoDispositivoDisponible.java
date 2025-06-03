@@ -4,6 +4,8 @@
  */
 package estados;
 
+import modelo.Cliente;
+import modelo.Dispositivo;
 import modelo.Pedido;
 import modelo.Servicio;
 
@@ -12,12 +14,20 @@ import modelo.Servicio;
  * @author Gerónimo
  */
 public class EstadoDispositivoDisponible implements EstadoDispositivo{
+    
+    private Dispositivo dispositivo;
 
-    @Override
-    public void identificarse(String usuario, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public EstadoDispositivoDisponible(Dispositivo dispositivo) {
+        this.dispositivo = dispositivo;
     }
-
+    
+    @Override
+    public Dispositivo identificarse(Cliente c) {
+        dispositivo.setEstado(new EstadoDispositivoOcupado(dispositivo));
+        dispositivo.agregarServicio(new Servicio(c, dispositivo));
+        return dispositivo;
+    }
+   
     @Override
     public void realizarPedido(Pedido pedido) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -32,5 +42,7 @@ public class EstadoDispositivoDisponible implements EstadoDispositivo{
     public void finalizarServicio(Servicio servicio) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    
     
 }

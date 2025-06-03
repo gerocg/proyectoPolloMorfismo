@@ -4,6 +4,10 @@
  */
 package modelo;
 
+import estados.EstadoDispositivo;
+import estados.EstadoDispositivoDisponible;
+import estados.EstadoDispositivoOcupado;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,13 +19,18 @@ public class Dispositivo {
     private final int id;
     private Servicio servicioActual;
     private List<Servicio> servicioHistorico;
+    private EstadoDispositivo estado;
     
     public Dispositivo(int id) {
         this.id = id;
+        this.servicioActual = null;
+        this.estado = new EstadoDispositivoDisponible(this);
+        this.servicioHistorico = new ArrayList<>();
     }
 
     public void setServicioActual(Servicio servicioActual) {
         this.servicioActual = servicioActual;
+        this.estado = new EstadoDispositivoOcupado(this);
     }
 
     public Servicio getServicioActual() {
@@ -41,6 +50,16 @@ public class Dispositivo {
         this.servicioHistorico.add(servicio);
         
     }
+
+    public void identificarse(Cliente c){
+        estado.identificarse(c);
+    }
+    
+    public void setEstado (EstadoDispositivo estado){
+        this.estado = estado;
+    }
+    
+    
     
     
 }

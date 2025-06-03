@@ -4,6 +4,8 @@
  */
 package estados;
 
+import modelo.Cliente;
+import modelo.Dispositivo;
 import modelo.Pedido;
 import modelo.Servicio;
 
@@ -12,10 +14,16 @@ import modelo.Servicio;
  * @author Gerónimo
  */
 public class EstadoDispositivoOcupado implements EstadoDispositivo{
+    
+    private Dispositivo dispositivo;
+
+    public EstadoDispositivoOcupado(Dispositivo dispositivo) {
+        this.dispositivo = dispositivo;
+    }
 
     @Override
-    public void identificarse(String usuario, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Dispositivo identificarse(Cliente c) {
+        return null;
     }
 
     @Override

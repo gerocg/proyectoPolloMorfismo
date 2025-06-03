@@ -4,6 +4,8 @@
  */
 package estados;
 
+import modelo.Cliente;
+import modelo.Dispositivo;
 import modelo.Pedido;
 import modelo.Servicio;
 
@@ -12,7 +14,7 @@ import modelo.Servicio;
  * @author Gerónimo
  */
 public interface EstadoDispositivo {
-    public void identificarse(String usuario, String password);
+    public Dispositivo identificarse(Cliente c);
     public void realizarPedido(Pedido pedido);
     public void quitarPedido(Pedido pedido);
     public void finalizarServicio(Servicio servicio);

@@ -5,6 +5,10 @@
 package vista;
 
 import javax.swing.table.DefaultTableModel;
+import modelo.Cliente;
+import modelo.Dispositivo;
+import modelo.Servicio;
+import servicios.Fachada;
 
 /**
  *
@@ -13,6 +17,9 @@ import javax.swing.table.DefaultTableModel;
 public class VentanaCliente extends javax.swing.JFrame {
 
     private DefaultTableModel modeloTabla;
+    private Fachada fachada = Fachada.getInstancia();
+    private Servicio servicio;
+    private Dispositivo dispositivo;
 
     /**
      * Creates new form VentanaCliente
@@ -20,6 +27,7 @@ public class VentanaCliente extends javax.swing.JFrame {
     public VentanaCliente() {
         initComponents();
         setTitle("Ventana Cliente | Usuario: -----");
+        lMensaje.setText("");
         setLocationRelativeTo(null);
         modeloTabla = new DefaultTableModel(
                 new Object[]{"Item", "Comentario", "Estado", "Unidad", "Gestor", "Precio"},
@@ -43,7 +51,7 @@ public class VentanaCliente extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         tPassword = new javax.swing.JPasswordField();
-        jButton5 = new javax.swing.JButton();
+        btnIngresar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -67,7 +75,7 @@ public class VentanaCliente extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        lMensaje = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -80,7 +88,12 @@ public class VentanaCliente extends javax.swing.JFrame {
 
         jLabel3.setText("Contraseña:");
 
-        jButton5.setText("Aceptar");
+        btnIngresar.setText("Aceptar");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpIdentificarseLayout = new javax.swing.GroupLayout(jpIdentificarse);
         jpIdentificarse.setLayout(jpIdentificarseLayout);
@@ -101,7 +114,7 @@ public class VentanaCliente extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(tPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(41, 41, 41)
-                        .addComponent(jButton5)))
+                        .addComponent(btnIngresar)))
                 .addContainerGap(74, Short.MAX_VALUE))
         );
         jpIdentificarseLayout.setVerticalGroup(
@@ -115,7 +128,7 @@ public class VentanaCliente extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(tPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5))
+                    .addComponent(btnIngresar))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
@@ -292,7 +305,7 @@ public class VentanaCliente extends javax.swing.JFrame {
 
         jLabel10.setText("Mensajes del sistema:");
 
-        jLabel11.setText("Mensaje de error");
+        lMensaje.setText("Mensaje de error");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -302,7 +315,7 @@ public class VentanaCliente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(jLabel11))
+                    .addComponent(lMensaje))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -311,7 +324,7 @@ public class VentanaCliente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel11)
+                .addComponent(lMensaje)
                 .addContainerGap(56, Short.MAX_VALUE))
         );
 
@@ -349,18 +362,35 @@ public class VentanaCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarPedidoActionPerformed
 
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        int numCliente = Integer.parseInt(tUsuario.getText());
+        Cliente clienteLogeado = fachada.ingresar(numCliente, new String(tPassword.getPassword()));
+        if (clienteLogeado != null) {
+            if (this.dispositivo == null){
+                this.dispositivo = fachada.ingresarCliente(clienteLogeado);
+                System.out.println("PRIMERO Dispositivo: " + dispositivo.getId());
+                servicio = dispositivo.getServicioActual();
+                setTitle("Ventana Cliente | Usuario: " + clienteLogeado.getNombreCompleto());
+                lMensaje.setText("¡Bienvenido/a " + clienteLogeado.getNombreCompleto() + "!");
+            } else if (dispositivo != null) {
+                lMensaje.setText("Ya hay un usuario logeado.");
+            }
+        } else {
+            lMensaje.setText("Datos incorrectos.");
+        }
+    }//GEN-LAST:event_btnIngresarActionPerformed
+
     /**
      * @param args the command line arguments
      */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarPedido;
     private javax.swing.JButton btnEliminarPedido;
+    private javax.swing.JButton btnIngresar;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -381,6 +411,7 @@ public class VentanaCliente extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel jpIdentificarse;
+    private javax.swing.JLabel lMensaje;
     private javax.swing.JPasswordField tPassword;
     private javax.swing.JTextField tUsuario;
     private javax.swing.JTable tablaPedidosServicio;
