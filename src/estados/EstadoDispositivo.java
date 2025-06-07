@@ -4,20 +4,21 @@
  */
 package estados;
 
+import Exceptions.DispositivoException;
 import modelo.Cliente;
 import modelo.Dispositivo;
+import modelo.Item;
 import modelo.Pedido;
-import modelo.Servicio;
 
 /**
  *
  * @author Gerónimo
  */
 public interface EstadoDispositivo {
-    public Dispositivo identificarse(Cliente c);
-    public void realizarPedido(Pedido pedido);
-    public void quitarPedido(Pedido pedido);
-    public void finalizarServicio(Servicio servicio);
+    public Dispositivo identificarse(Cliente c) throws DispositivoException;
+    public Pedido realizarPedido(Cliente cliente, Item item, String comentario, float precio) throws DispositivoException;
+    public void quitarPedido(Pedido pedido) throws DispositivoException;
+    public void finalizarServicio() throws DispositivoException;
     public String getNombre();
     public boolean estaDisponible();
 }

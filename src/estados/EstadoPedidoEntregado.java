@@ -13,40 +13,44 @@ import modelo.Pedido;
  *
  * @author Gerónimo
  */
-public class EstadoPedidoConfirmado implements EstadoPedido {
-
+public class EstadoPedidoEntregado implements EstadoPedido {
+    
     private final Pedido pedido;
     private final Cliente cliente;
 
-    public EstadoPedidoConfirmado(Pedido pedido, Cliente cliente) {
+    public EstadoPedidoEntregado(Pedido pedido, Cliente cliente) {
         this.pedido = pedido;
         this.cliente = cliente;
     }
 
     @Override
+    public String getNombre() {
+        return "Entregado";
+    }
+
+    @Override
     public void confirmarPedido() throws EstadoPedidoException {
-        throw new EstadoPedidoException("El pedido ya está confirmado, no puede ser confirmado de nuevo.");
+        throw new EstadoPedidoException("El pedido ya ha sido entregado, no puede ser confirmado.");
     }
 
     @Override
     public void quitarPedido() throws EstadoPedidoException {
-
+        throw new EstadoPedidoException("El pedido ya ha sido entregado, no puede ser eliminado.");
     }
 
     @Override
     public void tomarPedido(Gestor gestor) throws EstadoPedidoException {
-        this.pedido.setGestor(gestor);
-        this.pedido.setEstado(new EstadoPedidoEnProceso(this.pedido, this.cliente));
+        throw new EstadoPedidoException("El pedido ya ha sido entregado, no puede ser tomado.");
     }
 
     @Override
     public void entregarPedido() throws EstadoPedidoException {
-        throw new EstadoPedidoException("El pedido está confirmado, no puede ser entregado.");
+        throw new EstadoPedidoException("El pedido ya ha sido entregado, no puede ser entregado nuevamente.");
     }
-
+    
     @Override
-    public void finalizarPedido() throws EstadoPedidoException {
-        throw new EstadoPedidoException("El pedido está confirmado, no puede ser finalizado.");
+    public void finalizarPedido() throws EstadoPedidoException{
+        throw new EstadoPedidoException("El pedido ya ha sido entregado, no puede ser finalizado.");
     }
 
     @Override
@@ -54,8 +58,5 @@ public class EstadoPedidoConfirmado implements EstadoPedido {
         this.pedido.setPrecio(cliente.aplicarBeneficio(pedido));
     }
 
-    @Override
-    public String getNombre() {
-        return "Confirmado";
-    }
+    
 }

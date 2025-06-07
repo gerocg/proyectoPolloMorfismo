@@ -15,12 +15,12 @@ public class DeLaCasa extends TipoCliente{
     }
 
     @Override
-    public String getBeneficio() {
+    public String getBeneficioTexto() {
         return "Tendrá $500 de descuento por el servicio.";
     }
 
     @Override
-    public Servicio otorgarBeneficios(Servicio servicio) {
+    public float otorgarBeneficios(Pedido pedido) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

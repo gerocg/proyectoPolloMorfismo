@@ -17,12 +17,12 @@ public class Frecuente extends TipoCliente{
  
 
     @Override
-    public String getBeneficio() {
+    public String getBeneficioTexto() {
         return "¡Tendrá todos los cafés consumidos de forma gratuita!";
     }
 
     @Override
-    public Servicio otorgarBeneficios(Servicio servicio) {
+    public float otorgarBeneficios(Pedido pedido) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

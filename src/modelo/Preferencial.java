@@ -15,13 +15,13 @@ public class Preferencial extends TipoCliente{
     }
 
     @Override
-    public String getBeneficio() {
+    public String getBeneficioTexto() {
         return "Tendrá todas las aguas minerales de forma gratuita. Además, si el costo del servicio supera los $2000, tendrá un 5% de descuento.";
     }
 
     @Override
-    public Servicio otorgarBeneficios(Servicio servicio) {
-        return null;
+    public float otorgarBeneficios(Pedido pedido) {
+        return 0;
     }
     
 }

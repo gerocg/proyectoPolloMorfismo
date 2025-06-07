@@ -4,6 +4,7 @@
  */
 package modelo;
 
+import Exceptions.DispositivoException;
 import estados.EstadoDispositivo;
 import estados.EstadoDispositivoDisponible;
 import estados.EstadoDispositivoOcupado;
@@ -54,8 +55,12 @@ public class Dispositivo {
         this.servicioHistorico.add(servicio);
         
     }
+    
+    public Pedido realizarPedido(Cliente cliente, Item item, String comentario, float precio) throws DispositivoException{
+        return estado.realizarPedido(cliente, item, comentario, precio);
+    }
 
-    public void identificarse(Cliente c){
+    public void identificarse(Cliente c) throws DispositivoException{
         estado.identificarse(c);
     }
     
@@ -63,8 +68,8 @@ public class Dispositivo {
         this.estado = estado;
     }
     
-    public void finalizarServicio(){
-        this.estado.finalizarServicio(servicioActual);
+    public void finalizarServicio() throws DispositivoException{
+        this.estado.finalizarServicio();
     }
 
     public boolean estaDisponible() {

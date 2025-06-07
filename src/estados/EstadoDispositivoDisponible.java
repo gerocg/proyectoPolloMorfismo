@@ -4,8 +4,10 @@
  */
 package estados;
 
+import Exceptions.DispositivoException;
 import modelo.Cliente;
 import modelo.Dispositivo;
+import modelo.Item;
 import modelo.Pedido;
 import modelo.Servicio;
 
@@ -30,22 +32,23 @@ public class EstadoDispositivoDisponible implements EstadoDispositivo{
     public Dispositivo identificarse(Cliente c) {
         dispositivo.setEstado(new EstadoDispositivoOcupado(dispositivo));
         dispositivo.agregarServicio(new Servicio(c, dispositivo));
+        dispositivo.setEstado(new EstadoDispositivoOcupado(dispositivo));
         return dispositivo;
     }
    
     @Override
-    public void realizarPedido(Pedido pedido) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Pedido realizarPedido(Cliente cliente, Item item, String comentario, float precio) throws DispositivoException{
+        throw new DispositivoException("El dispositivo no está siendo utilizado.");
     }
 
     @Override
-    public void quitarPedido(Pedido pedido) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void quitarPedido(Pedido pedido) throws DispositivoException{
+        throw new DispositivoException("El dispositivo no está siendo utilizado.");
     }
 
     @Override
-    public void finalizarServicio(Servicio servicio) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void finalizarServicio() throws DispositivoException{
+        throw new DispositivoException("El dispositivo no está siendo utilizado.");
     }
 
     @Override

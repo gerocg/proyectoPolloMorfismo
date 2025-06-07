@@ -41,6 +41,8 @@ public class Cliente {
         this.tipo = tipo;
     }
     
-    
+    public float aplicarBeneficio(Pedido pedido){
+        return this.tipo.otorgarBeneficios(pedido);
+    }
     
 }

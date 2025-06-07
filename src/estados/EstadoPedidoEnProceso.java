@@ -4,47 +4,55 @@
  */
 package estados;
 
+import Exceptions.EstadoPedidoException;
+import modelo.Cliente;
 import modelo.Gestor;
 import modelo.Pedido;
-import modelo.UnidadProcesadora;
 
 /**
  *
  * @author Gerónimo
  */
-public class EstadoPedidoEnProceso implements EstadoPedido{
-    
-    private Pedido pedido;
+public class EstadoPedidoEnProceso implements EstadoPedido {
 
-    public EstadoPedidoEnProceso(Pedido pedido) {
+    private final Pedido pedido;
+    private final Cliente cliente;
+
+    public EstadoPedidoEnProceso(Pedido pedido, Cliente cliente) {
         this.pedido = pedido;
+        this.cliente = cliente;
     }
 
     @Override
-    public void confirmarPedido() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void confirmarPedido() throws EstadoPedidoException {
+        throw new EstadoPedidoException("El pedido está en proceso, no puede ser confirmado.");
     }
 
     @Override
-    public void quitarPedido() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void quitarPedido() throws EstadoPedidoException {
+        throw new EstadoPedidoException("El pedido está en proceso, no puede ser quitado.");
     }
 
     @Override
-    public void tomarPedido(Gestor gestor) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void tomarPedido(Gestor gestor) throws EstadoPedidoException {
+        throw new EstadoPedidoException("El pedido está en proceso, no puede ser tomado.");
     }
 
     @Override
-    public void entregarPedido() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void entregarPedido() throws EstadoPedidoException {
+        throw new EstadoPedidoException("El pedido está en proceso, no puede ser entregado.");
     }
-    
+
     @Override
-    public void finalizarPedido() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void finalizarPedido() throws EstadoPedidoException {
+        this.pedido.setEstado(new EstadoPedidoFinalizado(pedido, cliente));
     }
-    
+
+    @Override
+    public void cobrarPedido() {
+        this.pedido.setPrecio(cliente.aplicarBeneficio(pedido));
+    }
+
     @Override
     public String getNombre() {
         return "En proceso";

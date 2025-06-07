@@ -4,6 +4,7 @@
  */
 package modelo;
 
+import Exceptions.EstadoPedidoException;
 import estados.EstadoPedido;
 import estados.EstadoPedidoNoConfirmado;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * @author Gerónimo
  */
 public class Pedido {
+    private Cliente cliente;
     private Item item;
     private String comentario;
     private UnidadProcesadora unidad;
@@ -20,11 +22,12 @@ public class Pedido {
     private float precio;
     private EstadoPedido estado;
 
-    public Pedido( Item item, String comentario, float precio) {
+    public Pedido(Cliente c, Item item, String comentario, float precio) {
+        this.cliente = c;
         this.item = item;
         this.comentario = comentario;
         this.precio = precio;
-        this.estado = new EstadoPedidoNoConfirmado(this);
+        this.estado = new EstadoPedidoNoConfirmado(this, cliente);
     }
     
     public Item getItem() {
@@ -62,10 +65,17 @@ public class Pedido {
     public void setEstado(EstadoPedido estado) {
         this.estado = estado;
     }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
+    }
     
-    
-    
-    
-    
+    public void cobrarPedido() throws EstadoPedidoException{
+        this.estado.cobrarPedido();
+    }
     
 }

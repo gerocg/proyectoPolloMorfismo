@@ -18,11 +18,11 @@ public abstract class TipoCliente {
         this.cliente = cliente;
     }
     
-    public abstract Servicio otorgarBeneficios(Servicio servicio);
+    public abstract float otorgarBeneficios(Pedido pedido);
 
     public String getNombre() {
         return nombre;
     }
     
-    public abstract String getBeneficio();
+    public abstract String getBeneficioTexto();
 }

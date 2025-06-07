@@ -58,7 +58,7 @@ public class ServicioDispositivos {
         throw new DispositivoException("No hay dispositivos disponibles.");
     }
 
-    void finalizarServicio(Dispositivo dispositivo) {
+    void finalizarServicio(Dispositivo dispositivo) throws DispositivoException {
         dispositivo.finalizarServicio();
     }
 

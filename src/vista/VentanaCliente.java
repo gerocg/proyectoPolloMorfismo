@@ -90,7 +90,7 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        bFinalizarServicio = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaPedidosServicio = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
@@ -276,10 +276,10 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
 
         jButton3.setText("Confirmar pedido");
 
-        jButton4.setText("Finalizar Servicio");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        bFinalizarServicio.setText("Finalizar Servicio");
+        bFinalizarServicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                bFinalizarServicioActionPerformed(evt);
             }
         });
 
@@ -312,7 +312,7 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jButton3)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton4)))
+                                .addComponent(bFinalizarServicio)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
@@ -328,7 +328,7 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(bFinalizarServicio))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -424,7 +424,6 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
 
     private void btnAgregarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPedidoActionPerformed
         controlador.agregarPedido(itemSeleccionado, tComentario.getText());
-        tComentario.setText("");
     }//GEN-LAST:event_btnAgregarPedidoActionPerformed
 
     public void agregarPedido(Pedido pedido) {
@@ -436,6 +435,8 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
         float precio = pedido.getPrecio();
 
         modeloTabla.addRow(new Object[]{pedido, item, comentario, estadoPedido, unidadProcesadora, gestor, precio});
+        tComentario.setText("");
+        lMensaje.setText("Se agregó el pedido con el item: " + item + ".");
     }
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
@@ -452,14 +453,16 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
 
     }//GEN-LAST:event_lCategoriasValueChanged
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void bFinalizarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinalizarServicioActionPerformed
         controlador.finalizarServicio();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_bFinalizarServicioActionPerformed
 
     private void lItemsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lItemsValueChanged
         if (!evt.getValueIsAdjusting()) {
             this.itemSeleccionado = lItems.getSelectedValue();
-            System.out.println(itemSeleccionado.getNombre());
+            if(this.itemSeleccionado != null){
+                System.out.println(itemSeleccionado.getNombre());
+            }
         }
     }//GEN-LAST:event_lItemsValueChanged
 
@@ -476,11 +479,11 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
      * @param args the command line arguments
      */
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bFinalizarServicio;
     private javax.swing.JButton btnAgregarPedido;
     private javax.swing.JButton btnEliminarPedido;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

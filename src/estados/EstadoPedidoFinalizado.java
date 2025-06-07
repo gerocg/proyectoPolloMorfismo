@@ -5,9 +5,9 @@
 package estados;
 
 import Exceptions.EstadoPedidoException;
+import modelo.Cliente;
 import modelo.Gestor;
 import modelo.Pedido;
-import modelo.UnidadProcesadora;
 
 /**
  *
@@ -15,35 +15,42 @@ import modelo.UnidadProcesadora;
  */
 public class EstadoPedidoFinalizado implements EstadoPedido{
     
-    private Pedido pedido;
+    private final Pedido pedido;
+    private final Cliente cliente;
 
-    public EstadoPedidoFinalizado(Pedido pedido) {
+    public EstadoPedidoFinalizado(Pedido pedido, Cliente cliente) {
         this.pedido = pedido;
+        this.cliente = cliente;
     }
 
     @Override
     public void confirmarPedido() throws EstadoPedidoException{
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new EstadoPedidoException("El pedido ya está finalizado, no puede ser confirmado.");
     }
 
     @Override
     public void quitarPedido() throws EstadoPedidoException{
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new EstadoPedidoException("El pedido ya está finalizado, no puede ser quitado.");
     }
 
     @Override
     public void tomarPedido(Gestor gestor) throws EstadoPedidoException{
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new EstadoPedidoException("El pedido ya está finalizado, no puede ser tomado.");
     }
     
     @Override
     public void entregarPedido() throws EstadoPedidoException{
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+    }
+    
+    @Override
+    public void finalizarPedido() throws EstadoPedidoException{
+        throw new EstadoPedidoException("El pedido ya está finalizado.");
     }
 
     @Override
-    public void finalizarPedido() throws EstadoPedidoException{
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void cobrarPedido() throws EstadoPedidoException{
+        this.pedido.setPrecio(cliente.aplicarBeneficio(pedido));
     }
 
     @Override

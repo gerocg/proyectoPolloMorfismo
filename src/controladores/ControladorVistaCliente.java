@@ -5,7 +5,6 @@
 package controladores;
 
 import InterfacesVistas.VistaCliente;
-import estados.EstadoDispositivoDisponible;
 import modelo.Cliente;
 import modelo.Dispositivo;
 import modelo.Item;
@@ -19,8 +18,8 @@ import servicios.Fachada;
  */
 public class ControladorVistaCliente {
 
-    private VistaCliente vista;
-    private Fachada fachada = Fachada.getInstancia();
+    private final VistaCliente vista;
+    private final Fachada fachada = Fachada.getInstancia();
     private Cliente cliente;
     private Dispositivo dispositivo;
     private Servicio servicio;
@@ -44,31 +43,39 @@ public class ControladorVistaCliente {
                 servicio = dispositivo.getServicioActual();
                 vista.mostrarTitulo("Ventana Cliente | Usuario: " + clienteLogeado.getNombreCompleto());
                 vista.mensajeSistema("¡Bienvenido/a " + clienteLogeado.getNombreCompleto() + "!"
-                        + "\n Recuerde que es un cliente " + clienteLogeado.getTipo().getNombre() + ", por lo que " + clienteLogeado.getTipo().getBeneficio());
+                        + "\n Recuerde que es un cliente " + clienteLogeado.getTipo().getNombre() + ", por lo que " + clienteLogeado.getTipo().getBeneficioTexto());
             } else if (dispositivo != null) {
                 vista.mensajeError("Ya hay un usuario logeado.");
             }
         } catch (Exception e) {
             vista.mensajeError(e.getMessage());
         }
-
     }
 
     public void finalizarServicio() {
-        fachada.finalizarSesion(cliente);
-        fachada.finalizarServicio(dispositivo);
-        this.cliente = null;
-        this.dispositivo = null;
-        vista.cargarTituloInicial();
-        vista.mensajeSistema("Servicio finalizado correctamente.");
+        try {
+            fachada.finalizarServicio(dispositivo);
+            vista.cargarTituloInicial();
+            vista.mensajeSistema("Servicio finalizado correctamente. Se le aplicó el beneficio de: " + cliente.getTipo().getBeneficioTexto());
+            fachada.finalizarSesion(cliente);
+            this.cliente = null;
+            this.dispositivo = null;
+        } catch (Exception e) {
+            vista.mensajeError(e.getMessage());
+        }
+
     }
 
     public void agregarPedido(Item itemSeleccionado, String text) {
-        if (itemSeleccionado == null) {
-            vista.mensajeError("Seleccione un item primero.");
-        } else {
-            Pedido p = new Pedido(itemSeleccionado, text, itemSeleccionado.getPrecio());
-            vista.agregarPedido(p);
+        try {
+            if (itemSeleccionado == null) {
+                vista.mensajeError("Debe seleccionar un item primero.");
+            } else {
+                Pedido p = dispositivo.realizarPedido(this.cliente, itemSeleccionado, text, itemSeleccionado.getPrecio());
+                vista.agregarPedido(p);
+            }
+        } catch (Exception e) {
+            vista.mensajeError(e.getMessage());
         }
     }
 
@@ -77,7 +84,7 @@ public class ControladorVistaCliente {
             vista.mensajeError("Seleccione un pedido.");
         } else {
             try {
-                pedido.getEstado().quitarPedido();
+                dispositivo.getEstado().quitarPedido(pedido);
                 vista.quitarFilaPedido(fila);
             } catch (Exception e) {
                 vista.mensajeError(e.getMessage());
@@ -85,5 +92,4 @@ public class ControladorVistaCliente {
         }
 
     }
-
 }

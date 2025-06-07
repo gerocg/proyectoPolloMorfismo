@@ -104,8 +104,8 @@ public class Fachada {
         return sItems.getCategorias();
     }
 
-    public void finalizarServicio( Dispositivo dispositivo) {
-        sDispositivos.finalizarServicio( dispositivo);
+    public void finalizarServicio( Dispositivo dispositivo) throws DispositivoException {
+        sDispositivos.finalizarServicio(dispositivo);
     }
 
     public void finalizarSesion(Cliente cliente) {

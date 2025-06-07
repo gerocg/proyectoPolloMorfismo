@@ -6,7 +6,6 @@ package estados;
 
 import Exceptions.EstadoPedidoException;
 import modelo.Gestor;
-import modelo.UnidadProcesadora;
 
 /**
  *
@@ -19,5 +18,6 @@ public interface EstadoPedido {
     public void tomarPedido(Gestor gestor) throws EstadoPedidoException;
     public void entregarPedido() throws EstadoPedidoException;
     public void finalizarPedido() throws EstadoPedidoException;
+    public void cobrarPedido() throws EstadoPedidoException;
 
 }

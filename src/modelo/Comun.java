@@ -16,13 +16,13 @@ public class Comun extends TipoCliente{
 
 
     @Override
-    public String getBeneficio() {
-        return "no tendrá ningún beneficio.";
+    public String getBeneficioTexto() {
+        return "no tiene ningún beneficio.";
     }
 
     @Override
-    public Servicio otorgarBeneficios(Servicio servicio) {
-        return servicio;
+    public float otorgarBeneficios(Pedido pedido) {
+        return pedido.getPrecio();
     }
     
 }
