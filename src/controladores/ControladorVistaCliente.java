@@ -63,7 +63,6 @@ public class ControladorVistaCliente {
         } catch (Exception e) {
             vista.mensajeError(e.getMessage());
         }
-
     }
 
     public void agregarPedido(Item itemSeleccionado, String text) {

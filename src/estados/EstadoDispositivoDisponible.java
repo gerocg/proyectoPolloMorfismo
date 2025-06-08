@@ -30,7 +30,6 @@ public class EstadoDispositivoDisponible implements EstadoDispositivo{
     
     @Override
     public Dispositivo identificarse(Cliente c) {
-        dispositivo.setEstado(new EstadoDispositivoOcupado(dispositivo));
         dispositivo.agregarServicio(new Servicio(c, dispositivo));
         dispositivo.setEstado(new EstadoDispositivoOcupado(dispositivo));
         return dispositivo;
