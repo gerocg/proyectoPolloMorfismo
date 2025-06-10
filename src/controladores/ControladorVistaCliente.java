@@ -5,24 +5,25 @@
 package controladores;
 
 import InterfacesVistas.VistaCliente;
+import Observer.Observable;
+import Observer.Observador;
+import java.util.List;
 import modelo.Cliente;
 import modelo.Dispositivo;
 import modelo.Item;
 import modelo.Pedido;
-import modelo.Servicio;
 import servicios.Fachada;
 
 /**
  *
  * @author Gerónimo
  */
-public class ControladorVistaCliente {
+public class ControladorVistaCliente implements Observador{
 
     private final VistaCliente vista;
     private final Fachada fachada = Fachada.getInstancia();
     private Cliente cliente;
     private Dispositivo dispositivo;
-    private Servicio servicio;
 
     public ControladorVistaCliente(VistaCliente vista) {
         this.vista = vista;
@@ -40,7 +41,6 @@ public class ControladorVistaCliente {
                 this.cliente = clienteLogeado;
                 this.dispositivo = fachada.ingresarCliente(clienteLogeado);
                 System.out.println("PRIMERO Dispositivo: " + dispositivo.getId() + " - Nombre del estado: " + dispositivo.getEstado().getNombre());
-                servicio = dispositivo.getServicioActual();
                 vista.mostrarTitulo("Ventana Cliente | Usuario: " + clienteLogeado.getNombreCompleto());
                 vista.mensajeSistema("¡Bienvenido/a " + clienteLogeado.getNombreCompleto() + "!"
                         + "\n Recuerde que es un cliente " + clienteLogeado.getTipo().getNombre() + ", por lo que " + clienteLogeado.getTipo().getBeneficioTexto());
@@ -90,5 +90,23 @@ public class ControladorVistaCliente {
             }
         }
 
+    }
+
+    @Override
+    public void notificar(Observable origen, Object evento) {
+        if(evento.equals(Observable.Evento.PEDIDO_CONFIRMADO)){
+            
+        }
+    }
+
+    public void confirmarPedidos(List<Pedido> pedidosDelServicio) {
+        for(Pedido p : pedidosDelServicio){
+            try{
+                p.getEstado().confirmarPedido();
+                fachada.pedidoConfirmado(p);
+            } catch (Exception e){
+                vista.mensajeError(e.getMessage());
+            }
+        }
     }
 }

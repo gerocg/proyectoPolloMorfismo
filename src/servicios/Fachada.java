@@ -112,5 +112,13 @@ public class Fachada {
         sPersonas.finalizarSesion(cliente);
     }
 
+    public List<Pedido> getPedidosConfirmados() {
+        return sDispositivos.getPedidosConfirmados();
+    }
+
+    public void pedidoConfirmado(Pedido p) {
+        sDispositivos.pedidoConfirmado(p);
+    }
+
 }
 

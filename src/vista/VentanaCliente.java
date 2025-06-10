@@ -89,7 +89,7 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
         btnEliminarPedido = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        bConfirmarPedidos = new javax.swing.JButton();
         bFinalizarServicio = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaPedidosServicio = new javax.swing.JTable();
@@ -274,7 +274,12 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
 
         jLabel8.setText("Pedidos del servicio");
 
-        jButton3.setText("Confirmar pedido");
+        bConfirmarPedidos.setText("Confirmar pedidos");
+        bConfirmarPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bConfirmarPedidosActionPerformed(evt);
+            }
+        });
 
         bFinalizarServicio.setText("Finalizar Servicio");
         bFinalizarServicio.addActionListener(new java.awt.event.ActionListener() {
@@ -310,7 +315,7 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jButton3)
+                                .addComponent(bConfirmarPedidos)
                                 .addGap(18, 18, 18)
                                 .addComponent(bFinalizarServicio)))
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -327,7 +332,7 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
+                    .addComponent(bConfirmarPedidos)
                     .addComponent(bFinalizarServicio))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -460,7 +465,7 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
     private void lItemsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lItemsValueChanged
         if (!evt.getValueIsAdjusting()) {
             this.itemSeleccionado = lItems.getSelectedValue();
-            if(this.itemSeleccionado != null){
+            if (this.itemSeleccionado != null) {
                 System.out.println(itemSeleccionado.getNombre());
             }
         }
@@ -468,22 +473,35 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
 
     private void btnEliminarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPedidoActionPerformed
         int fila = tablaPedidosServicio.getSelectedRow();
-        controlador.eliminarPedido(fila,(Pedido) modeloTabla.getValueAt(fila, 0));
+        controlador.eliminarPedido(fila, (Pedido) modeloTabla.getValueAt(fila, 0));
     }//GEN-LAST:event_btnEliminarPedidoActionPerformed
 
-    
-    public void quitarFilaPedido(int fila){
+    private void bConfirmarPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConfirmarPedidosActionPerformed
+        
+
+        int filas = tablaPedidosServicio.getRowCount();
+        List<Pedido> pedidosDelServicio = new ArrayList();
+
+        for (int i = 0; i < filas; i++) {
+            Object pedidoObj = tablaPedidosServicio.getValueAt(i, 0);
+            Pedido pedido = (Pedido) pedidoObj;
+            pedidosDelServicio.add(pedido);
+        }
+        this.controlador.confirmarPedidos(pedidosDelServicio);
+    }//GEN-LAST:event_bConfirmarPedidosActionPerformed
+
+    public void quitarFilaPedido(int fila) {
         modeloTabla.removeRow(fila);
     }
     /**
      * @param args the command line arguments
      */
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bConfirmarPedidos;
     private javax.swing.JButton bFinalizarServicio;
     private javax.swing.JButton btnAgregarPedido;
     private javax.swing.JButton btnEliminarPedido;
     private javax.swing.JButton btnIngresar;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

@@ -5,6 +5,7 @@
 package servicios;
 
 import Exceptions.DispositivoException;
+import Observer.Observable;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Cliente;
@@ -16,16 +17,18 @@ import modelo.Servicio;
  *
  * @author Gerónimo
  */
-public class ServicioDispositivos {
+public class ServicioDispositivos extends Observable{
 
     private List<Dispositivo> dispositivos;
     private List<Pedido> pedidos;
+    private List<Pedido> pedidosConfirmados;
     private List<Servicio> servicios;
 
     public ServicioDispositivos() {
         this.dispositivos = new ArrayList<>();
         this.pedidos = new ArrayList<>();
         this.servicios = new ArrayList<>();
+        this.pedidosConfirmados = new ArrayList<>();
     }
 
     public void agregar(Dispositivo d) {
@@ -57,9 +60,22 @@ public class ServicioDispositivos {
         }
         throw new DispositivoException("No hay dispositivos disponibles.");
     }
+    
+    public void confirmarPedido(Pedido pedido){
+        
+    }
 
     void finalizarServicio(Dispositivo dispositivo) throws DispositivoException {
         dispositivo.finalizarServicio();
+    }
+    
+    public List<Pedido> getPedidosConfirmados(){
+        return this.pedidosConfirmados;
+    }
+
+    public void pedidoConfirmado(Pedido p) {
+        this.pedidosConfirmados.add(p);
+        notificar(Observable.Evento.PEDIDO_CONFIRMADO);
     }
 
 }
