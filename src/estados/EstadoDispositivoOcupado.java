@@ -14,6 +14,7 @@ import modelo.Dispositivo;
 import modelo.Item;
 import modelo.Pedido;
 import modelo.Servicio;
+import modelo.UnidadProcesadora;
 
 /**
  *
@@ -39,8 +40,8 @@ public class EstadoDispositivoOcupado implements EstadoDispositivo{
     }
 
     @Override
-    public Pedido realizarPedido(Cliente cliente, Item item, String comentario, float precio) {
-        return new Pedido(cliente, item, comentario, precio);
+    public Pedido realizarPedido(Cliente cliente, Item item, String comentario, float precio, UnidadProcesadora unidad) {
+        return new Pedido(cliente, item, comentario, precio, unidad);
     }
 
     @Override

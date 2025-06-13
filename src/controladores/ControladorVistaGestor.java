@@ -7,6 +7,7 @@ package controladores;
 import InterfacesVistas.VistaGestor;
 import Observer.Observable;
 import Observer.Observador;
+import java.util.ArrayList;
 import java.util.List;
 import modelo.Gestor;
 import modelo.Pedido;
@@ -16,8 +17,8 @@ import servicios.Fachada;
  *
  * @author Gerónimo
  */
-public class ControladorVistaGestor implements Observador{
-    
+public class ControladorVistaGestor implements Observador {
+
     private Gestor gestor;
     private VistaGestor vista;
     private List<Pedido> pedidosConfirmados;
@@ -26,26 +27,25 @@ public class ControladorVistaGestor implements Observador{
     public ControladorVistaGestor(Gestor gestor, VistaGestor vista) {
         this.gestor = gestor;
         this.vista = vista;
+        this.pedidosConfirmados = new ArrayList();
         actualizarPedidos();
     }
-    
-    
 
     @Override
     public void notificar(Observable origen, Object evento) {
-        if(evento.equals(Observable.Evento.PEDIDO_CONFIRMADO)){
+        if (evento.equals(Observable.Evento.PEDIDO_CONFIRMADO)) {
             actualizarPedidos();
         }
     }
 
     private void actualizarPedidos() {
         List<Pedido> todosLosPedidosConfirmados = fachada.getPedidosConfirmados();
-        for(Pedido p : todosLosPedidosConfirmados){
-            if(p.getUnidad().equals(this.gestor.getUnidad())){
+        for (Pedido p : todosLosPedidosConfirmados) {
+            if (p.getUnidad().equals(this.gestor.getUnidad())) {
                 this.pedidosConfirmados.add(p);
             }
         }
         vista.actualizarPedidos(this.pedidosConfirmados);
     }
-    
+
 }

@@ -31,7 +31,7 @@ public class VentanaInicio extends javax.swing.JFrame {
         bClientes = new javax.swing.JButton();
         bGestores = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         bClientes.setText("Clientes");
         bClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -41,6 +41,11 @@ public class VentanaInicio extends javax.swing.JFrame {
         });
 
         bGestores.setText("Gestores");
+        bGestores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bGestoresActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,6 +74,10 @@ public class VentanaInicio extends javax.swing.JFrame {
     private void bClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bClientesActionPerformed
         new VentanaCliente().setVisible(true);
     }//GEN-LAST:event_bClientesActionPerformed
+
+    private void bGestoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGestoresActionPerformed
+        new VentanaLoginGestor().setVisible(true);
+    }//GEN-LAST:event_bGestoresActionPerformed
 
     /**
      * @param args the command line arguments

@@ -69,8 +69,10 @@ public class ControladorVistaCliente implements Observador{
         try {
             if (itemSeleccionado == null) {
                 vista.mensajeError("Debe seleccionar un item primero.");
+            } else if (dispositivo == null){
+                vista.mensajeError("Inicie sesión antes de realizar un pedido.");
             } else {
-                Pedido p = dispositivo.realizarPedido(this.cliente, itemSeleccionado, text, itemSeleccionado.getPrecio());
+                Pedido p = dispositivo.realizarPedido(this.cliente, itemSeleccionado, text, itemSeleccionado.getPrecio(), itemSeleccionado.getUnidad());
                 vista.agregarPedido(p);
             }
         } catch (Exception e) {
@@ -108,5 +110,6 @@ public class ControladorVistaCliente implements Observador{
                 vista.mensajeError(e.getMessage());
             }
         }
+        vista.refrescarPedidos(pedidosDelServicio);
     }
 }

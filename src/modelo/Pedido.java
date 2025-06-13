@@ -22,12 +22,13 @@ public class Pedido {
     private float precio;
     private EstadoPedido estado;
 
-    public Pedido(Cliente c, Item item, String comentario, float precio) {
+    public Pedido(Cliente c, Item item, String comentario, float precio, UnidadProcesadora unidad) {
         this.cliente = c;
         this.item = item;
         this.comentario = comentario;
         this.precio = precio;
         this.estado = new EstadoPedidoNoConfirmado(this, cliente);
+        this.unidad = unidad;
     }
     
     public Item getItem() {

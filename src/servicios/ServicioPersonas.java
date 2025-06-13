@@ -5,6 +5,7 @@
 package servicios;
 
 import Exceptions.ClienteIngresadoException;
+import Exceptions.GestorIngresadoException;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Cliente;
@@ -62,11 +63,12 @@ public class ServicioPersonas {
         return null;
     }
 
-    public Gestor ingresar(String usuario, String password) {
+    public Gestor ingresar(String usuario, String password) throws GestorIngresadoException {
         Gestor gestor = loginGestor(usuario, password, this.gestores);
-        if (gestor != null) {
-            gestoresIngresados.add(gestor);
+        if (gestor == null) {
+            throw new GestorIngresadoException("Datos incorrectos.");
         }
+        gestoresIngresados.add(gestor);
         return gestor;
     }
 

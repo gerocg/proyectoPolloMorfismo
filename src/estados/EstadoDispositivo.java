@@ -9,6 +9,7 @@ import modelo.Cliente;
 import modelo.Dispositivo;
 import modelo.Item;
 import modelo.Pedido;
+import modelo.UnidadProcesadora;
 
 /**
  *
@@ -16,7 +17,7 @@ import modelo.Pedido;
  */
 public interface EstadoDispositivo {
     public Dispositivo identificarse(Cliente c) throws DispositivoException;
-    public Pedido realizarPedido(Cliente cliente, Item item, String comentario, float precio) throws DispositivoException;
+    public Pedido realizarPedido(Cliente cliente, Item item, String comentario, float precio, UnidadProcesadora unidad) throws DispositivoException;
     public void quitarPedido(Pedido pedido) throws DispositivoException;
     public void finalizarServicio() throws DispositivoException;
     public String getNombre();

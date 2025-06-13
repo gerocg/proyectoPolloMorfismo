@@ -441,7 +441,6 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
 
         modeloTabla.addRow(new Object[]{pedido, item, comentario, estadoPedido, unidadProcesadora, gestor, precio});
         tComentario.setText("");
-        lMensaje.setText("Se agregó el pedido con el item: " + item + ".");
     }
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
@@ -455,7 +454,6 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
             cargarItems(categoriaSeleccionada);
             System.out.println(categoriaSeleccionada.getNombre());
         }
-
     }//GEN-LAST:event_lCategoriasValueChanged
 
     private void bFinalizarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinalizarServicioActionPerformed
@@ -465,9 +463,6 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
     private void lItemsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lItemsValueChanged
         if (!evt.getValueIsAdjusting()) {
             this.itemSeleccionado = lItems.getSelectedValue();
-            if (this.itemSeleccionado != null) {
-                System.out.println(itemSeleccionado.getNombre());
-            }
         }
     }//GEN-LAST:event_lItemsValueChanged
 
@@ -477,11 +472,8 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
     }//GEN-LAST:event_btnEliminarPedidoActionPerformed
 
     private void bConfirmarPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConfirmarPedidosActionPerformed
-        
-
         int filas = tablaPedidosServicio.getRowCount();
         List<Pedido> pedidosDelServicio = new ArrayList();
-
         for (int i = 0; i < filas; i++) {
             Object pedidoObj = tablaPedidosServicio.getValueAt(i, 0);
             Pedido pedido = (Pedido) pedidoObj;
@@ -489,6 +481,13 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
         }
         this.controlador.confirmarPedidos(pedidosDelServicio);
     }//GEN-LAST:event_bConfirmarPedidosActionPerformed
+
+    public void refrescarPedidos(List<Pedido> pedidosDelServicio) {
+        modeloTabla.setRowCount(0);
+        for (Pedido p : pedidosDelServicio) {
+            agregarPedido(p);
+        }
+    }
 
     public void quitarFilaPedido(int fila) {
         modeloTabla.removeRow(fila);

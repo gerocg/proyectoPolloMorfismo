@@ -10,6 +10,7 @@ import modelo.Dispositivo;
 import modelo.Item;
 import modelo.Pedido;
 import modelo.Servicio;
+import modelo.UnidadProcesadora;
 
 /**
  *
@@ -36,7 +37,7 @@ public class EstadoDispositivoDisponible implements EstadoDispositivo{
     }
    
     @Override
-    public Pedido realizarPedido(Cliente cliente, Item item, String comentario, float precio) throws DispositivoException{
+    public Pedido realizarPedido(Cliente cliente, Item item, String comentario, float precio, UnidadProcesadora unidad) throws DispositivoException{
         throw new DispositivoException("El dispositivo no está siendo utilizado.");
     }
 

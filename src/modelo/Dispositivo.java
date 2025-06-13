@@ -56,8 +56,8 @@ public class Dispositivo {
         
     }
     
-    public Pedido realizarPedido(Cliente cliente, Item item, String comentario, float precio) throws DispositivoException{
-        return estado.realizarPedido(cliente, item, comentario, precio);
+    public Pedido realizarPedido(Cliente cliente, Item item, String comentario, float precio, UnidadProcesadora unidad) throws DispositivoException{
+        return estado.realizarPedido(cliente, item, comentario, precio, unidad);
     }
 
     public void identificarse(Cliente c) throws DispositivoException{

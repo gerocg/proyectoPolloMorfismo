@@ -6,6 +6,7 @@ package servicios;
 
 import Exceptions.ClienteIngresadoException;
 import Exceptions.DispositivoException;
+import Exceptions.GestorIngresadoException;
 import java.util.List;
 import modelo.Categoria;
 import modelo.Cliente;
@@ -84,7 +85,7 @@ public class Fachada {
        return sPersonas.ingresar(numCliente, password);
     }
     
-    public Gestor ingresar(String usuario, String password){
+    public Gestor ingresar(String usuario, String password) throws GestorIngresadoException{
         return sPersonas.ingresar(usuario, password);
     }
 

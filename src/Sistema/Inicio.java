@@ -315,7 +315,7 @@ public class Inicio {
 
         for (int i = 0; i < nombresGestores.length; i++) {
             UnidadProcesadora unidad = unidades[i % unidades.length];
-            Gestor g = new Gestor("gestor" + (i + 1), "clave" + (i + 1), nombresGestores[i], unidad);
+            Gestor g = new Gestor("gestor" + (i + 1), "pass" + (i + 1), nombresGestores[i], unidad);
             fachada.agregar(g);
         }
 
