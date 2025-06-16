@@ -26,6 +26,7 @@ public class EstadoPedidoNoConfirmado implements EstadoPedido {
     @Override
     public void confirmarPedido() {
         this.pedido.setEstado(new EstadoPedidoConfirmado(pedido, cliente));
+        this.pedido.definirFecha();
     }
 
     @Override

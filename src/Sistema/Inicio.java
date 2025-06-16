@@ -19,6 +19,7 @@ import modelo.Ingrediente;
 import modelo.Insumo;
 import modelo.Item;
 import modelo.Preferencial;
+import modelo.TipoAlimento;
 import modelo.TipoCliente;
 import modelo.UnidadProcesadora;
 import servicios.Fachada;
@@ -159,119 +160,119 @@ public class Inicio {
         ingredientes1.add(new Ingrediente(1, i1)); // Pan
         ingredientes1.add(new Ingrediente(1, i2)); // Carne
         ingredientes1.add(new Ingrediente(1, i4)); // Tomate
-        Item item1 = new Item("Hamburguesa Clásica", 250, ingredientes1, new Cocina(), catPlatos);
+        Item item1 = new Item("Hamburguesa Clásica", 250, ingredientes1, new Cocina(), catPlatos, TipoAlimento.Plato_Principal);
         fachada.agregarItemACategoria(catPlatos, item1);
 
         List<Ingrediente> ingredientes2 = new ArrayList<>();
         ingredientes2.add(new Ingrediente(1, i6)); // Papas
         ingredientes2.add(new Ingrediente(1, i7)); // Aceite
-        Item item2 = new Item("Papas Fritas", 150.0f, ingredientes2, new Cocina(), catEntradas);
+        Item item2 = new Item("Papas Fritas", 150.0f, ingredientes2, new Cocina(), catEntradas, TipoAlimento.Entrada);
         fachada.agregarItemACategoria(catEntradas, item2);
 
         List<Ingrediente> ingredientes3 = new ArrayList<>();
         ingredientes3.add(new Ingrediente(1, i21)); // Chocolate
         ingredientes3.add(new Ingrediente(1, i18)); // Leche
-        Item item3 = new Item("Chocolate Caliente", 120.0f, ingredientes3, new Bar(), catCafes);
+        Item item3 = new Item("Chocolate Caliente", 120.0f, ingredientes3, new Bar(), catCafes, TipoAlimento.Café);
         fachada.agregarItemACategoria(catCafes, item3);
 
         List<Ingrediente> ingredientes4 = new ArrayList<>();
         ingredientes4.add(new Ingrediente(1, i26)); // Helado
         ingredientes4.add(new Ingrediente(1, i27)); // Frutilla
-        Item item4 = new Item("Copa Helada de Frutilla", 180.0f, ingredientes4, new Cocina(), catPostres);
+        Item item4 = new Item("Copa Helada de Frutilla", 180.0f, ingredientes4, new Cocina(), catPostres, TipoAlimento.Postre);
         fachada.agregarItemACategoria(catPostres, item4);
 
         List<Ingrediente> ingredientes5 = new ArrayList<>();
         ingredientes5.add(new Ingrediente(1, i22)); // Vino tinto
-        Item item5 = new Item("Vino Tinto Reserva", 320.0f, ingredientes5, new Bar(), catVinos);
+        Item item5 = new Item("Vino Tinto Reserva", 320.0f, ingredientes5, new Bar(), catVinos, TipoAlimento.Vino);
         fachada.agregarItemACategoria(catVinos, item5);
 
         List<Ingrediente> ingredientes6 = new ArrayList<>();
         ingredientes6.add(new Ingrediente(1, i24)); // Gaseosa
-        Item item6 = new Item("Gaseosa Cola", 100.0f, ingredientes6, new Bar(), catBebidas);
+        Item item6 = new Item("Gaseosa Cola", 100.0f, ingredientes6, new Bar(), catBebidas, TipoAlimento.Refresco);
         fachada.agregarItemACategoria(catBebidas, item6);
 
         List<Ingrediente> ingredientes7 = new ArrayList<>();
         ingredientes7.add(new Ingrediente(1, i3)); // Lechuga
         ingredientes7.add(new Ingrediente(1, i4)); // Tomate
         ingredientes7.add(new Ingrediente(1, i5)); // Queso
-        Item item7 = new Item("Ensalada Fresca", 160.0f, ingredientes7, new Cocina(), catEntradas);
+        Item item7 = new Item("Ensalada Fresca", 160.0f, ingredientes7, new Cocina(), catEntradas, TipoAlimento.Entrada);
         fachada.agregarItemACategoria(catEntradas, item7);
 
         List<Ingrediente> ingredientes8 = new ArrayList<>();
         ingredientes8.add(new Ingrediente(1, i12)); // Arroz
         ingredientes8.add(new Ingrediente(1, i10)); // Pollo
-        Item item8 = new Item("Arroz con Pollo", 280.0f, ingredientes8, new Cocina(), catPlatos);
+        Item item8 = new Item("Arroz con Pollo", 280.0f, ingredientes8, new Cocina(), catPlatos, TipoAlimento.Plato_Principal);
         fachada.agregarItemACategoria(catPlatos, item8);
 
         List<Ingrediente> ingredientes9 = new ArrayList<>();
         ingredientes9.add(new Ingrediente(1, i19)); // Café
-        Item item9 = new Item("Café Solo", 90.0f, ingredientes9, new Bar(), catCafes);
+        Item item9 = new Item("Café Solo", 90.0f, ingredientes9, new Bar(), catCafes, TipoAlimento.Café);
         fachada.agregarItemACategoria(catCafes, item9);
 
         List<Ingrediente> ingredientes10 = new ArrayList<>();
         ingredientes10.add(new Ingrediente(1, i28)); // Dulce de leche
         ingredientes10.add(new Ingrediente(1, i16)); // Harina
-        Item item10 = new Item("Panqueque de Dulce de Leche", 210.0f, ingredientes10, new Cocina(), catPostres);
+        Item item10 = new Item("Panqueque de Dulce de Leche", 210.0f, ingredientes10, new Cocina(), catPostres, TipoAlimento.Postre);
         fachada.agregarItemACategoria(catPostres, item10);
 
 // ... Items del 1 al 10 previos ... (ya presentes)
         List<Ingrediente> ingredientes11 = new ArrayList<>();
         ingredientes11.add(new Ingrediente(1, i30)); // Jamón
         ingredientes11.add(new Ingrediente(1, i31)); // Mozzarella
-        Item item11 = new Item("Tostado de Jamón y Queso", 200.0f, ingredientes11, new Cocina(), catEntradas);
+        Item item11 = new Item("Tostado de Jamón y Queso", 200.0f, ingredientes11, new Cocina(), catEntradas, TipoAlimento.Entrada);
         fachada.agregarItemACategoria(catEntradas, item11);
 
         List<Ingrediente> ingredientes12 = new ArrayList<>();
         ingredientes12.add(new Ingrediente(1, i32)); // Masa de pizza
         ingredientes12.add(new Ingrediente(1, i31)); // Mozzarella
         ingredientes12.add(new Ingrediente(1, i14)); // Salsa
-        Item item12 = new Item("Pizza Margarita", 300.0f, ingredientes12, new Cocina(), catPlatos);
+        Item item12 = new Item("Pizza Margarita", 300.0f, ingredientes12, new Cocina(), catPlatos, TipoAlimento.Plato_Principal);
         fachada.agregarItemACategoria(catPlatos, item12);
 
         List<Ingrediente> ingredientes13 = new ArrayList<>();
         ingredientes13.add(new Ingrediente(1, i33)); // Caramelo
         ingredientes13.add(new Ingrediente(1, i26)); // Helado
-        Item item13 = new Item("Helado con Caramelo", 160.0f, ingredientes13, new Cocina(), catPostres);
+        Item item13 = new Item("Helado con Caramelo", 160.0f, ingredientes13, new Cocina(), catPostres, TipoAlimento.Postre);
         fachada.agregarItemACategoria(catPostres, item13);
 
         List<Ingrediente> ingredientes14 = new ArrayList<>();
         ingredientes14.add(new Ingrediente(1, i25)); // Agua
-        Item item14 = new Item("Agua Mineral", 70.0f, ingredientes14, new Bar(), catBebidas);
+        Item item14 = new Item("Agua Mineral", 70.0f, ingredientes14, new Bar(), catBebidas, TipoAlimento.Agua);
         fachada.agregarItemACategoria(catBebidas, item14);
 
         List<Ingrediente> ingredientes15 = new ArrayList<>();
         ingredientes15.add(new Ingrediente(1, i23)); // Vino blanco
-        Item item15 = new Item("Vino Blanco Chardonnay", 330.0f, ingredientes15, new Bar(), catVinos);
+        Item item15 = new Item("Vino Blanco Chardonnay", 330.0f, ingredientes15, new Bar(), catVinos, TipoAlimento.Vino);
         fachada.agregarItemACategoria(catVinos, item15);
 
         List<Ingrediente> ingredientes16 = new ArrayList<>();
         ingredientes16.add(new Ingrediente(1, i20)); // Té
         ingredientes16.add(new Ingrediente(1, i18)); // Leche
-        Item item16 = new Item("Té con Leche", 100.0f, ingredientes16, new Bar(), catCafes);
+        Item item16 = new Item("Té con Leche", 100.0f, ingredientes16, new Bar(), catCafes, TipoAlimento.Café);
         fachada.agregarItemACategoria(catCafes, item16);
 
         List<Ingrediente> ingredientes17 = new ArrayList<>();
         ingredientes17.add(new Ingrediente(1, i13)); // Fideos
         ingredientes17.add(new Ingrediente(1, i14)); // Salsa
-        Item item17 = new Item("Fideos con Salsa", 260.0f, ingredientes17, new Cocina(), catPlatos);
+        Item item17 = new Item("Fideos con Salsa", 260.0f, ingredientes17, new Cocina(), catPlatos, TipoAlimento.Plato_Principal);
         fachada.agregarItemACategoria(catPlatos, item17);
 
         List<Ingrediente> ingredientes18 = new ArrayList<>();
         ingredientes18.add(new Ingrediente(1, i1)); // Pan
         ingredientes18.add(new Ingrediente(1, i29)); // Pan de ajo
-        Item item18 = new Item("Pan de Ajo", 120.0f, ingredientes18, new Cocina(), catEntradas);
+        Item item18 = new Item("Pan de Ajo", 120.0f, ingredientes18, new Cocina(), catEntradas, TipoAlimento.Entrada);
         fachada.agregarItemACategoria(catEntradas, item18);
 
         List<Ingrediente> ingredientes19 = new ArrayList<>();
         ingredientes19.add(new Ingrediente(1, i34)); // Crema
         ingredientes19.add(new Ingrediente(1, i27)); // Frutilla
-        Item item19 = new Item("Frutillas con Crema", 190.0f, ingredientes19, new Cocina(), catPostres);
+        Item item19 = new Item("Frutillas con Crema", 190.0f, ingredientes19, new Cocina(), catPostres, TipoAlimento.Postre);
         fachada.agregarItemACategoria(catPostres, item19);
 
         List<Ingrediente> ingredientes20 = new ArrayList<>();
         ingredientes20.add(new Ingrediente(1, i8)); // Sal
         ingredientes20.add(new Ingrediente(1, i9)); // Pimienta
-        Item item20 = new Item("Sal y Pimienta", 50.0f, ingredientes20, new Cocina(), catEntradas);
+        Item item20 = new Item("Sal y pimienta", 50.0f, ingredientes20, new Cocina(), catEntradas, TipoAlimento.Entrada);
         fachada.agregarItemACategoria(catEntradas, item20);
 
 // === Clientes ===

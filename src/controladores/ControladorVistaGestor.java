@@ -19,15 +19,18 @@ import servicios.Fachada;
  */
 public class ControladorVistaGestor implements Observador {
 
-    private Gestor gestor;
-    private VistaGestor vista;
+    private final Gestor gestor;
+    private final VistaGestor vista;
     private List<Pedido> pedidosConfirmados;
-    private Fachada fachada = Fachada.getInstancia();
+    private List<Pedido> pedidosTabla;
+    private final Fachada fachada = Fachada.getInstancia();
 
     public ControladorVistaGestor(Gestor gestor, VistaGestor vista) {
         this.gestor = gestor;
         this.vista = vista;
         this.pedidosConfirmados = new ArrayList();
+        this.pedidosTabla = new ArrayList();
+        this.fachada.suscribirADispositivos(this);
         actualizarPedidos();
     }
 
@@ -36,16 +39,58 @@ public class ControladorVistaGestor implements Observador {
         if (evento.equals(Observable.Evento.PEDIDO_CONFIRMADO)) {
             actualizarPedidos();
         }
+        if (evento.equals(Observable.Evento.PEDIDO_EN_PROCESO)) {
+            actualizarPedidos();
+            actualizarTabla();
+        }
+        if (evento.equals(Observable.Evento.PEDIDO_FINALIZADO) || evento.equals(Observable.Evento.PEDIDO_ENTREGADO)) {
+            actualizarTabla();
+        }
     }
 
     private void actualizarPedidos() {
+        vista.borrarPedidos();
+        pedidosConfirmados.clear();
         List<Pedido> todosLosPedidosConfirmados = fachada.getPedidosConfirmados();
         for (Pedido p : todosLosPedidosConfirmados) {
-            if (p.getUnidad().equals(this.gestor.getUnidad())) {
+            if (!pedidosConfirmados.contains(p) && p.getUnidad().equals(gestor.getUnidad())) {
                 this.pedidosConfirmados.add(p);
             }
         }
         vista.actualizarPedidos(this.pedidosConfirmados);
+    }
+
+    public void tomarPedido(Pedido pedidoSeleccionado) {
+        try {
+            fachada.tomarPedido(pedidoSeleccionado, gestor);
+            if (!pedidosTabla.contains(pedidoSeleccionado)) {
+                this.pedidosTabla.add(pedidoSeleccionado);
+            }
+            actualizarTabla();
+        } catch (Exception e) {
+            vista.mensajeError(e.getMessage());
+        }
+    }
+
+    private void actualizarTabla() {
+        vista.cargarPedidoTabla(pedidosTabla);
+    }
+
+    public void finalizarPedido(Pedido p) {
+        try{
+            fachada.finalizarPedido(p);
+        } catch (Exception e){
+            vista.mensajeError(e.getMessage());
+        }
+    }
+
+    public void entregarPedido(Pedido p) {
+       try{
+            fachada.entregarPedido(p);
+            System.out.println("Funciona");
+        } catch (Exception e){
+            vista.mensajeError(e.getMessage());
+        } 
     }
 
 }

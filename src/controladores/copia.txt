@@ -1,8 +1,11 @@
-String item = pedido.getItem().getNombre();
-    String comentario = pedido.getComentario();
-    String estado = pedido.getEstado().getNombre();
-    String unidad = (pedido.getUnidad() != null) ? pedido.getUnidad().getNombre() : "----";
-    String gestor = (pedido.getGestor() != null) ? pedido.getGestor().getNombre() : "----";
-    double precio = pedido.getPrecio();
-
-    modeloTabla.addRow(new Object[]{item, comentario, estado, unidad, gestor, precio});
+private void actualizarPedidos() {
+        vista.borrarPedidos();
+        pedidosConfirmados.clear();
+        List<Pedido> todosLosPedidosConfirmados = fachada.getPedidosConfirmados();
+        for (Pedido p : todosLosPedidosConfirmados) {
+            if (!pedidosConfirmados.contains(p) && p.getUnidad().equals(gestor.getUnidad())) {
+                this.pedidosConfirmados.add(p);
+            }
+        }
+        vista.actualizarPedidos(this.pedidosConfirmados);
+    }

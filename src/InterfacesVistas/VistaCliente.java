@@ -29,5 +29,6 @@ public interface VistaCliente {
     public void quitarFilaPedido(int fila);
 
     public void refrescarPedidos(List<Pedido> pedidosDelServicio);
+
     
 }

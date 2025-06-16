@@ -5,11 +5,13 @@
 package servicios;
 
 import Exceptions.DispositivoException;
+import Exceptions.EstadoPedidoException;
 import Observer.Observable;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Cliente;
 import modelo.Dispositivo;
+import modelo.Gestor;
 import modelo.Pedido;
 import modelo.Servicio;
 
@@ -76,6 +78,22 @@ public class ServicioDispositivos extends Observable{
     public void pedidoConfirmado(Pedido p) {
         this.pedidosConfirmados.add(p);
         notificar(Observable.Evento.PEDIDO_CONFIRMADO);
+    }
+
+    void tomarPedido(Pedido pedidoSeleccionado, Gestor gestor) throws EstadoPedidoException {
+        pedidoSeleccionado.getEstado().tomarPedido(gestor);
+        this.pedidosConfirmados.remove(pedidoSeleccionado);
+        notificar(Observable.Evento.PEDIDO_EN_PROCESO);
+    }
+
+    void finalizarPedido(Pedido p) throws EstadoPedidoException {
+        p.getEstado().finalizarPedido();
+        notificar(Observable.Evento.PEDIDO_FINALIZADO);
+    }
+
+    void entregarPedido(Pedido p) throws EstadoPedidoException {
+        p.getEstado().entregarPedido();
+        notificar(Observable.Evento.PEDIDO_ENTREGADO);
     }
 
 }

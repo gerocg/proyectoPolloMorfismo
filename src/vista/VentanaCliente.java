@@ -431,6 +431,7 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
         controlador.agregarPedido(itemSeleccionado, tComentario.getText());
     }//GEN-LAST:event_btnAgregarPedidoActionPerformed
 
+    
     public void agregarPedido(Pedido pedido) {
         String item = pedido.getItem().getNombre();
         String comentario = pedido.getComentario();

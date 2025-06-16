@@ -7,6 +7,7 @@ package controladores;
 import InterfacesVistas.VistaCliente;
 import Observer.Observable;
 import Observer.Observador;
+import java.util.ArrayList;
 import java.util.List;
 import modelo.Cliente;
 import modelo.Dispositivo;
@@ -18,15 +19,18 @@ import servicios.Fachada;
  *
  * @author Gerónimo
  */
-public class ControladorVistaCliente implements Observador{
+public class ControladorVistaCliente implements Observador {
 
     private final VistaCliente vista;
     private final Fachada fachada = Fachada.getInstancia();
     private Cliente cliente;
     private Dispositivo dispositivo;
+    private List<Pedido> pedidosDelDispositivo;
 
     public ControladorVistaCliente(VistaCliente vista) {
         this.vista = vista;
+        fachada.suscribirADispositivos(this);
+        this.pedidosDelDispositivo = new ArrayList();
         cargarDatos();
     }
 
@@ -69,10 +73,11 @@ public class ControladorVistaCliente implements Observador{
         try {
             if (itemSeleccionado == null) {
                 vista.mensajeError("Debe seleccionar un item primero.");
-            } else if (dispositivo == null){
+            } else if (dispositivo == null) {
                 vista.mensajeError("Inicie sesión antes de realizar un pedido.");
             } else {
                 Pedido p = dispositivo.realizarPedido(this.cliente, itemSeleccionado, text, itemSeleccionado.getPrecio(), itemSeleccionado.getUnidad());
+                this.pedidosDelDispositivo.add(p);
                 vista.agregarPedido(p);
             }
         } catch (Exception e) {
@@ -87,6 +92,7 @@ public class ControladorVistaCliente implements Observador{
             try {
                 dispositivo.getEstado().quitarPedido(pedido);
                 vista.quitarFilaPedido(fila);
+                this.pedidosDelDispositivo.remove(pedido);
             } catch (Exception e) {
                 vista.mensajeError(e.getMessage());
             }
@@ -96,17 +102,15 @@ public class ControladorVistaCliente implements Observador{
 
     @Override
     public void notificar(Observable origen, Object evento) {
-        if(evento.equals(Observable.Evento.PEDIDO_CONFIRMADO)){
-            
-        }
+        vista.refrescarPedidos(pedidosDelDispositivo);
     }
 
     public void confirmarPedidos(List<Pedido> pedidosDelServicio) {
-        for(Pedido p : pedidosDelServicio){
-            try{
+        for (Pedido p : pedidosDelServicio) {
+            try {
                 p.getEstado().confirmarPedido();
                 fachada.pedidoConfirmado(p);
-            } catch (Exception e){
+            } catch (Exception e) {
                 vista.mensajeError(e.getMessage());
             }
         }

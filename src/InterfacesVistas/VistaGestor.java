@@ -14,5 +14,11 @@ import modelo.Pedido;
 public interface VistaGestor {
 
     public void actualizarPedidos(List<Pedido> pedidosConfirmados);
+
+    public void mensajeError(String message);
+
+    public void cargarPedidoTabla(List<Pedido> pedidosTabla);
+
+    public void borrarPedidos();
     
 }

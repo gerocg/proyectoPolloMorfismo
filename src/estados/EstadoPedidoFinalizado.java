@@ -40,7 +40,7 @@ public class EstadoPedidoFinalizado implements EstadoPedido{
     
     @Override
     public void entregarPedido() throws EstadoPedidoException{
-        
+        this.pedido.setEstado(new EstadoPedidoEntregado(pedido, cliente));
     }
     
     @Override

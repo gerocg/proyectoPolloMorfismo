@@ -6,7 +6,10 @@ package servicios;
 
 import Exceptions.ClienteIngresadoException;
 import Exceptions.DispositivoException;
+import Exceptions.EstadoPedidoException;
 import Exceptions.GestorIngresadoException;
+import Observer.Observador;
+import controladores.ControladorVistaGestor;
 import java.util.List;
 import modelo.Categoria;
 import modelo.Cliente;
@@ -119,6 +122,26 @@ public class Fachada {
 
     public void pedidoConfirmado(Pedido p) {
         sDispositivos.pedidoConfirmado(p);
+    }
+
+    public void tomarPedido(Pedido pedidoSeleccionado, Gestor gestor) throws EstadoPedidoException {
+        sDispositivos.tomarPedido(pedidoSeleccionado, gestor);
+    }
+
+    public void suscribirADispositivos(Observador obs) {
+        sDispositivos.subscribir(obs);
+    }
+    
+    public void desuscribirADispositivos(Observador obs){
+        sDispositivos.desusbscribir(obs);
+    }
+
+    public void finalizarPedido(Pedido p) throws EstadoPedidoException {
+        sDispositivos.finalizarPedido(p);
+    }
+
+    public void entregarPedido(Pedido p) throws EstadoPedidoException {
+        sDispositivos.entregarPedido(p);
     }
 
 }

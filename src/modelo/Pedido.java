@@ -7,7 +7,9 @@ package modelo;
 import Exceptions.EstadoPedidoException;
 import estados.EstadoPedido;
 import estados.EstadoPedidoNoConfirmado;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 /**
  *
@@ -21,6 +23,7 @@ public class Pedido {
     private Gestor gestor;
     private float precio;
     private EstadoPedido estado;
+    private Date fechaConfirmacion;
 
     public Pedido(Cliente c, Item item, String comentario, float precio, UnidadProcesadora unidad) {
         this.cliente = c;
@@ -79,4 +82,12 @@ public class Pedido {
         this.estado.cobrarPedido();
     }
     
+    public void definirFecha(){
+        this.fechaConfirmacion = new Date();
+    }
+    
+    public String getFecha(){
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        return formato.format(fechaConfirmacion);
+    }
 }

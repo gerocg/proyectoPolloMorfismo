@@ -23,7 +23,7 @@ public class Frecuente extends TipoCliente{
 
     @Override
     public float otorgarBeneficios(Pedido pedido) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return 0;
     }
     
 }

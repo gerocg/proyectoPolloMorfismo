@@ -9,9 +9,11 @@ import controladores.ControladorVistaGestor;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import modelo.Gestor;
 import modelo.Pedido;
 
@@ -19,18 +21,40 @@ import modelo.Pedido;
  *
  * @author Gerónimo
  */
-public class VentanaGestor extends javax.swing.JFrame implements VistaGestor{
+public class VentanaGestor extends javax.swing.JFrame implements VistaGestor {
 
     private Gestor gestor;
     private ControladorVistaGestor controlador;
-    
+    private DefaultTableModel modeloTabla;
+    private DefaultListModel modeloLista = new DefaultListModel();
+    private Pedido pedidoSeleccionadoLista;
+    private Pedido pedidoSeleccionadoTabla;
+
     public VentanaGestor(Gestor gestor) {
         initComponents();
         setLocationRelativeTo(null);
         this.gestor = gestor;
-        this.controlador = new ControladorVistaGestor(gestor, this);
         this.lInfoGestor.setText("Gestor: " + gestor.getNombreCompleto() + " | Unidad Procesadora: " + gestor.getUnidad().getNombre());
         this.lPedidos.setCellRenderer(new RenderizadorPedidos());
+        this.lPedidos.setModel(modeloLista);
+        modeloTabla = new DefaultTableModel(
+                new Object[]{"Pedido", "Item", "Comentario", "Cliente", "Fecha y hora", "Estado"},
+                0 // cantidad de filas inicial
+        );
+        tPedidos.setModel(modeloTabla);
+        tPedidos.getColumnModel().getColumn(0).setMinWidth(0);
+        tPedidos.getColumnModel().getColumn(0).setMaxWidth(0);
+        tPedidos.getColumnModel().getColumn(0).setWidth(0);
+        tPedidos.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int filaSeleccionada = tPedidos.getSelectedRow();
+                if (filaSeleccionada != -1) {
+                    Object valor = tPedidos.getValueAt(filaSeleccionada, 0);
+                    pedidoSeleccionadoTabla = (Pedido) valor;
+                }
+            }
+        });
+        this.controlador = new ControladorVistaGestor(gestor, this);
     }
 
     /**
@@ -49,9 +73,9 @@ public class VentanaGestor extends javax.swing.JFrame implements VistaGestor{
         jLabel1 = new javax.swing.JLabel();
         bTomarPedido = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        tPedidos = new javax.swing.JTable();
+        bFinalizarPedido = new javax.swing.JButton();
+        bEntregarPedido = new javax.swing.JButton();
         lMensaje = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -60,11 +84,21 @@ public class VentanaGestor extends javax.swing.JFrame implements VistaGestor{
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        lPedidos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lPedidosValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(lPedidos);
 
         jLabel1.setText("Pedidos confirmados:");
 
         bTomarPedido.setText("Tomar pedido");
+        bTomarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bTomarPedidoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -94,7 +128,7 @@ public class VentanaGestor extends javax.swing.JFrame implements VistaGestor{
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -105,11 +139,21 @@ public class VentanaGestor extends javax.swing.JFrame implements VistaGestor{
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tPedidos);
 
-        jButton1.setText("Finalizar pedido");
+        bFinalizarPedido.setText("Finalizar pedido");
+        bFinalizarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bFinalizarPedidoActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Entregar pedido");
+        bEntregarPedido.setText("Entregar pedido");
+        bEntregarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bEntregarPedidoActionPerformed(evt);
+            }
+        });
 
         lMensaje.setText("Mensaje");
 
@@ -119,17 +163,17 @@ public class VentanaGestor extends javax.swing.JFrame implements VistaGestor{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lMensaje)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lMensaje)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(bFinalizarPedido)
+                                .addGap(18, 18, 18)
+                                .addComponent(bEntregarPedido)))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -147,8 +191,8 @@ public class VentanaGestor extends javax.swing.JFrame implements VistaGestor{
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
+                    .addComponent(bFinalizarPedido)
+                    .addComponent(bEntregarPedido)
                     .addComponent(lMensaje))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
@@ -156,34 +200,76 @@ public class VentanaGestor extends javax.swing.JFrame implements VistaGestor{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void bTomarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTomarPedidoActionPerformed
+        controlador.tomarPedido(pedidoSeleccionadoLista);
+    }//GEN-LAST:event_bTomarPedidoActionPerformed
+
+    private void lPedidosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lPedidosValueChanged
+        if (!evt.getValueIsAdjusting()) {
+            this.pedidoSeleccionadoLista = (Pedido) lPedidos.getSelectedValue();
+        }
+    }//GEN-LAST:event_lPedidosValueChanged
+
+    private void bFinalizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinalizarPedidoActionPerformed
+        controlador.finalizarPedido(pedidoSeleccionadoTabla);
+    }//GEN-LAST:event_bFinalizarPedidoActionPerformed
+
+    private void bEntregarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEntregarPedidoActionPerformed
+        controlador.entregarPedido(pedidoSeleccionadoTabla);
+    }//GEN-LAST:event_bEntregarPedidoActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public void actualizarPedidos(List<Pedido> pedidosConfirmados){
+    public void actualizarPedidos(List<Pedido> pedidosConfirmados) {
         lPedidos.setListData(pedidosConfirmados.toArray(new Pedido[pedidosConfirmados.size()]));
     }
 
+    public void mensajeError(String error) {
+        this.lMensaje.setText(error);
+    }
+
+    public void cargarPedidoTabla(List<Pedido> pedidos) {
+        modeloTabla.setRowCount(0);
+        for (Pedido pedido : pedidos) {
+            Object[] fila = new Object[]{
+                pedido, // Columna 0 oculta
+                pedido.getItem().getNombre(),
+                pedido.getComentario(),
+                pedido.getCliente().getNombreCompleto(),
+                pedido.getFecha(), // o formateado con DateTimeFormatter
+                pedido.getEstado().getNombre()
+            };
+            modeloTabla.addRow(fila);
+        }
+    }
+
+    public void borrarPedidos() {
+        if (modeloLista != null) {
+            modeloLista.clear();
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bEntregarPedido;
+    private javax.swing.JButton bFinalizarPedido;
     private javax.swing.JButton bTomarPedido;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lInfoGestor;
     private javax.swing.JLabel lMensaje;
     private javax.swing.JList lPedidos;
+    private javax.swing.JTable tPedidos;
     // End of variables declaration//GEN-END:variables
-    
-    
+
     private class RenderizadorPedidos implements ListCellRenderer<Pedido> {
 
         @Override
         public Component getListCellRendererComponent(JList<? extends Pedido> list, Pedido pedido, int index, boolean isSelected, boolean cellHasFocus) {
             JLabel label = new JLabel();
-            label.setText(pedido.getItem().getNombre() + " - Cliente: " + pedido.getCliente().getNombreCompleto());
+            label.setText(pedido.getItem().getNombre() + " - Cliente: " + pedido.getCliente().getNombreCompleto() + " - " + pedido.getFecha());
 
             if (isSelected) {
                 label.setForeground(Color.blue);
