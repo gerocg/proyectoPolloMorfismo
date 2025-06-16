@@ -21,7 +21,18 @@ public class Preferencial extends TipoCliente{
 
     @Override
     public float otorgarBeneficios(Pedido pedido) {
-        return 0;
+        if(pedido.getItem().getTipo().equals(TipoAlimento.Agua)){
+            return 0;
+        }
+        return pedido.getPrecio();
+    }
+
+    @Override
+    public float aplicarDescuentos(float total) {
+        if(total > 2000){
+            return total * 0.95f;
+        }
+        return total;
     }
     
 }

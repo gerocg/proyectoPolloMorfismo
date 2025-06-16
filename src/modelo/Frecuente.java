@@ -23,7 +23,15 @@ public class Frecuente extends TipoCliente{
 
     @Override
     public float otorgarBeneficios(Pedido pedido) {
-        return 0;
+        if(pedido.getItem().getTipo().equals(TipoAlimento.Café)){
+            return 0;
+        }
+        return pedido.getPrecio();
+    }
+
+    @Override
+    public float aplicarDescuentos(float total) {
+        return total;
     }
     
 }

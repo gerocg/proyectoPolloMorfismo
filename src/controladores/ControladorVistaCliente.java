@@ -41,32 +41,50 @@ public class ControladorVistaCliente implements Observador {
     public void ingresar(int numCliente, String password) {
         try {
             Cliente clienteLogeado = fachada.ingresar(numCliente, password);
-            if (this.dispositivo == null) {
-                this.cliente = clienteLogeado;
-                this.dispositivo = fachada.ingresarCliente(clienteLogeado);
-                System.out.println("PRIMERO Dispositivo: " + dispositivo.getId() + " - Nombre del estado: " + dispositivo.getEstado().getNombre());
-                vista.mostrarTitulo("Ventana Cliente | Usuario: " + clienteLogeado.getNombreCompleto());
-                vista.mensajeSistema("¡Bienvenido/a " + clienteLogeado.getNombreCompleto() + "!"
-                        + "\n Recuerde que es un cliente " + clienteLogeado.getTipo().getNombre() + ", por lo que " + clienteLogeado.getTipo().getBeneficioTexto());
-            } else if (dispositivo != null) {
-                vista.mensajeError("Ya hay un usuario logeado.");
-            }
+            this.cliente = clienteLogeado;
+            this.dispositivo = fachada.ingresarCliente(clienteLogeado);
+            vista.mostrarTitulo("Ventana Cliente | Usuario: " + clienteLogeado.getNombreCompleto());
+            vista.mensajeSistema("<html>¡Bienvenido/a " + clienteLogeado.getNombreCompleto() + 
+                    "!<br>Recuerde que es un cliente " + clienteLogeado.getTipo().getNombre() + 
+                    ". <br>Por lo tanto: " + clienteLogeado.getTipo().getBeneficioTexto()+ "</html>");
+            vista.borrarPedidos();
         } catch (Exception e) {
             vista.mensajeError(e.getMessage());
         }
     }
 
     public void finalizarServicio() {
+        int pedidosPendientes = 0;
+
+        for (Pedido p : pedidosDelDispositivo) {
+            if (p.getEstado().estaPendienteEntrega()) {
+                pedidosPendientes++;
+            }
+        }
         try {
+            for (Pedido p : pedidosDelDispositivo) {
+                p.finalizarServicio();
+            }
+            fachada.finalizarPrecioServicio(dispositivo);
+            if (pedidosPendientes > 0) {
+                vista.mensajeSistema("<html>¡Tienes " + pedidosPendientes + " pedidos en proceso, recuerda ir a retirarlos!<br>Servicio finalizado correctamente. Se le aplicó el beneficio de: " + cliente.getTipo().getBeneficioTexto() + ""
+                        + "<br> El monto total es de: $" + precioServicio() + "</html>");
+            } else {
+                vista.mensajeSistema("<html>Servicio finalizado correctamente. Se le aplicó el beneficio de: " + cliente.getTipo().getBeneficioTexto()
+                        + "<br>El monto total a pagar es de: $" + precioServicio() + " </html>");
+            }
             fachada.finalizarServicio(dispositivo);
             vista.cargarTituloInicial();
-            vista.mensajeSistema("Servicio finalizado correctamente. Se le aplicó el beneficio de: " + cliente.getTipo().getBeneficioTexto());
             fachada.finalizarSesion(cliente);
             this.cliente = null;
             this.dispositivo = null;
         } catch (Exception e) {
             vista.mensajeError(e.getMessage());
         }
+    }
+
+    private float precioServicio() {
+        return dispositivo.getServicioActual().getPrecioServicio();
     }
 
     public void agregarPedido(Item itemSeleccionado, String text) {
@@ -79,6 +97,7 @@ public class ControladorVistaCliente implements Observador {
                 Pedido p = dispositivo.realizarPedido(this.cliente, itemSeleccionado, text, itemSeleccionado.getPrecio(), itemSeleccionado.getUnidad());
                 this.pedidosDelDispositivo.add(p);
                 vista.agregarPedido(p);
+                vista.actualizarPrecio(precioServicio());
             }
         } catch (Exception e) {
             vista.mensajeError(e.getMessage());

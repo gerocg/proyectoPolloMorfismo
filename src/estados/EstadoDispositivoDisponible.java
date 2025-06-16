@@ -56,6 +56,11 @@ public class EstadoDispositivoDisponible implements EstadoDispositivo{
         return true;
     }
 
+    @Override
+    public float calcularCostoFinal() throws DispositivoException {
+        throw new DispositivoException("El dispositivo no está siendo utilizado.");
+    }
+
     
     
 }

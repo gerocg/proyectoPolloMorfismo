@@ -8,6 +8,7 @@ import Exceptions.EstadoPedidoException;
 import modelo.Cliente;
 import modelo.Gestor;
 import modelo.Pedido;
+import modelo.Servicio;
 
 /**
  *
@@ -49,12 +50,17 @@ public class EstadoPedidoEnProceso implements EstadoPedido {
     }
 
     @Override
-    public void cobrarPedido() {
-        this.pedido.setPrecio(cliente.aplicarBeneficio(pedido));
+    public void finalizarServicio() {
+        
     }
 
     @Override
     public String getNombre() {
         return "En proceso";
+    }
+
+    @Override
+    public boolean estaPendienteEntrega() {
+        return true;
     }
 }

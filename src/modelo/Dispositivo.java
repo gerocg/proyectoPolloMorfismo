@@ -75,6 +75,10 @@ public class Dispositivo {
     public boolean estaDisponible() {
         return estado.estaDisponible();
     }
+
+    public void finalizarPrecioServicio() throws DispositivoException {
+        estado.calcularCostoFinal();
+    }
     
     
     

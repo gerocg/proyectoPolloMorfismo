@@ -8,6 +8,7 @@ import Exceptions.EstadoPedidoException;
 import modelo.Cliente;
 import modelo.Gestor;
 import modelo.Pedido;
+import modelo.Servicio;
 
 /**
  *
@@ -50,13 +51,18 @@ public class EstadoPedidoNoConfirmado implements EstadoPedido {
     }
 
     @Override
-    public void cobrarPedido() throws EstadoPedidoException {
+    public void finalizarServicio() throws EstadoPedidoException {
         throw new EstadoPedidoException("Debe confirmar el pedido antes de poder finalizarlo.");
     }
 
     @Override
     public String getNombre() {
         return "No confirmado";
+    }
+
+    @Override
+    public boolean estaPendienteEntrega() {
+        return false;
     }
 
 }

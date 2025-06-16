@@ -144,5 +144,9 @@ public class Fachada {
         sDispositivos.entregarPedido(p);
     }
 
+    public void finalizarPrecioServicio(Dispositivo dispositivo) throws DispositivoException {
+        sDispositivos.finalizarPrecioServicio(dispositivo);
+    }
+
 }
 

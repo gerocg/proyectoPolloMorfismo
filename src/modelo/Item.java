@@ -31,6 +31,10 @@ public class Item {
         return nombre;
     }
 
+    public TipoAlimento getTipo() {
+        return tipo;
+    }
+
     public float getPrecio() {
         return precio;
     }

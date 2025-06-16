@@ -78,8 +78,8 @@ public class Pedido {
         this.precio = precio;
     }
     
-    public void cobrarPedido() throws EstadoPedidoException{
-        this.estado.cobrarPedido();
+    public void finalizarServicio() throws EstadoPedidoException{
+        this.estado.finalizarServicio();
     }
     
     public void definirFecha(){

@@ -13,15 +13,14 @@ import modelo.Cliente;
 import modelo.Dispositivo;
 import modelo.Item;
 import modelo.Pedido;
-import modelo.Servicio;
 import modelo.UnidadProcesadora;
 
 /**
  *
  * @author Gerónimo
  */
-public class EstadoDispositivoOcupado implements EstadoDispositivo{
-    
+public class EstadoDispositivoOcupado implements EstadoDispositivo {
+
     private Dispositivo dispositivo;
     private String nombre = "Ocupado";
 
@@ -32,16 +31,17 @@ public class EstadoDispositivoOcupado implements EstadoDispositivo{
     public String getNombre() {
         return nombre;
     }
-    
 
     @Override
-    public Dispositivo identificarse(Cliente c) throws DispositivoException{
+    public Dispositivo identificarse(Cliente c) throws DispositivoException {
         throw new DispositivoException("El dispositivo ya está siendo ocupado.");
     }
 
     @Override
     public Pedido realizarPedido(Cliente cliente, Item item, String comentario, float precio, UnidadProcesadora unidad) {
-        return new Pedido(cliente, item, comentario, precio, unidad);
+        Pedido p = new Pedido(cliente, item, comentario, precio, unidad);
+        this.dispositivo.getServicioActual().agregarPedido(p);
+        return p;
     }
 
     @Override
@@ -55,14 +55,7 @@ public class EstadoDispositivoOcupado implements EstadoDispositivo{
 
     @Override
     public void finalizarServicio() throws DispositivoException {
-        List<Pedido> pedidos = this.dispositivo.getServicioActual().getPedidos();
-        for(Pedido p : pedidos){
-            try {
-                p.cobrarPedido();
-            } catch (EstadoPedidoException ex) {
-                throw new DispositivoException (ex.getMessage());
-            }
-        }
+        this.dispositivo.getServicioActual().calcularCostoFinal();
         this.dispositivo.setServicioActual(null);
         this.dispositivo.setEstado(new EstadoDispositivoDisponible(this.dispositivo));
     }
@@ -71,5 +64,10 @@ public class EstadoDispositivoOcupado implements EstadoDispositivo{
     public boolean estaDisponible() {
         return false;
     }
-    
+
+    @Override
+    public float calcularCostoFinal() throws DispositivoException {
+        return this.dispositivo.getServicioActual().calcularCostoFinal();
+    }
+
 }

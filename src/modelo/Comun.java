@@ -24,5 +24,10 @@ public class Comun extends TipoCliente{
     public float otorgarBeneficios(Pedido pedido) {
         return pedido.getPrecio();
     }
+
+    @Override
+    public float aplicarDescuentos(float total) {
+        return total;
+    }
     
 }

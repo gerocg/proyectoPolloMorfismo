@@ -46,7 +46,6 @@ public class ServicioPersonas {
             throw new ClienteIngresadoException("El usuario ya ha sido ingresado.");
         }
         clientesIngresados.add(cliente);
-        System.out.println("Ingresado");
         return cliente;
     }
 

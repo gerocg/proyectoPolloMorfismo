@@ -30,5 +30,9 @@ public interface VistaCliente {
 
     public void refrescarPedidos(List<Pedido> pedidosDelServicio);
 
+    public void actualizarPrecio(float precioServicio);
+
+    public void borrarPedidos();
+
     
 }

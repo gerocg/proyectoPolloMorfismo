@@ -20,6 +20,7 @@ public interface EstadoDispositivo {
     public Pedido realizarPedido(Cliente cliente, Item item, String comentario, float precio, UnidadProcesadora unidad) throws DispositivoException;
     public void quitarPedido(Pedido pedido) throws DispositivoException;
     public void finalizarServicio() throws DispositivoException;
+    public float calcularCostoFinal() throws DispositivoException;
     public String getNombre();
     public boolean estaDisponible();
 }

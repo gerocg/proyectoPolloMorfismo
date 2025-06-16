@@ -25,4 +25,6 @@ public abstract class TipoCliente {
     }
     
     public abstract String getBeneficioTexto();
+    
+    public abstract float aplicarDescuentos(float total);
 }

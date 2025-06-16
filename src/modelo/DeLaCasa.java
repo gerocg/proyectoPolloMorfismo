@@ -21,7 +21,16 @@ public class DeLaCasa extends TipoCliente{
 
     @Override
     public float otorgarBeneficios(Pedido pedido) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return pedido.getPrecio();
+    }
+
+    @Override
+    public float aplicarDescuentos(float total) {
+        float totalActual = total - 500;
+        if(totalActual < 0){
+            return 0;
+        }
+        return totalActual;
     }
     
     

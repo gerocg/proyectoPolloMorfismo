@@ -62,10 +62,6 @@ public class ServicioDispositivos extends Observable{
         }
         throw new DispositivoException("No hay dispositivos disponibles.");
     }
-    
-    public void confirmarPedido(Pedido pedido){
-        
-    }
 
     void finalizarServicio(Dispositivo dispositivo) throws DispositivoException {
         dispositivo.finalizarServicio();
@@ -94,6 +90,10 @@ public class ServicioDispositivos extends Observable{
     void entregarPedido(Pedido p) throws EstadoPedidoException {
         p.getEstado().entregarPedido();
         notificar(Observable.Evento.PEDIDO_ENTREGADO);
+    }
+
+    void finalizarPrecioServicio(Dispositivo dispositivo) throws DispositivoException {
+        dispositivo.finalizarPrecioServicio();
     }
 
 }

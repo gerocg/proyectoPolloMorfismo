@@ -93,7 +93,7 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
         bFinalizarServicio = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaPedidosServicio = new javax.swing.JTable();
-        jLabel9 = new javax.swing.JLabel();
+        lTotal = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         lMensaje = new javax.swing.JLabel();
@@ -301,7 +301,7 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
         ));
         jScrollPane4.setViewportView(tablaPedidosServicio);
 
-        jLabel9.setText("Monto total: $0");
+        lTotal.setText("Monto total: $0");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -322,7 +322,7 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9)
+                .addComponent(lTotal)
                 .addGap(80, 80, 80))
         );
         jPanel3Layout.setVerticalGroup(
@@ -337,7 +337,7 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
+                .addComponent(lTotal)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -431,6 +431,9 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
         controlador.agregarPedido(itemSeleccionado, tComentario.getText());
     }//GEN-LAST:event_btnAgregarPedidoActionPerformed
 
+    public void actualizarPrecio(float precio){
+        this.lTotal.setText("Monto total: $" + precio);
+    }
     
     public void agregarPedido(Pedido pedido) {
         String item = pedido.getItem().getNombre();
@@ -453,7 +456,6 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
         if (!evt.getValueIsAdjusting()) {
             this.categoriaSeleccionada = lCategorias.getSelectedValue();
             cargarItems(categoriaSeleccionada);
-            System.out.println(categoriaSeleccionada.getNombre());
         }
     }//GEN-LAST:event_lCategoriasValueChanged
 
@@ -461,6 +463,10 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
         controlador.finalizarServicio();
     }//GEN-LAST:event_bFinalizarServicioActionPerformed
 
+    public void borrarPedidos(){
+        modeloTabla.setRowCount(0);
+    }
+    
     private void lItemsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lItemsValueChanged
         if (!evt.getValueIsAdjusting()) {
             this.itemSeleccionado = lItems.getSelectedValue();
@@ -511,7 +517,6 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -524,6 +529,7 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
     private javax.swing.JList<Categoria> lCategorias;
     private javax.swing.JList<Item> lItems;
     private javax.swing.JLabel lMensaje;
+    private javax.swing.JLabel lTotal;
     private javax.swing.JTextArea tComentario;
     private javax.swing.JPasswordField tPassword;
     private javax.swing.JTextField tUsuario;

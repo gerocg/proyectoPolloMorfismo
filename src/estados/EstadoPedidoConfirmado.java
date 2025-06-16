@@ -8,6 +8,7 @@ import Exceptions.EstadoPedidoException;
 import modelo.Cliente;
 import modelo.Gestor;
 import modelo.Pedido;
+import modelo.Servicio;
 
 /**
  *
@@ -27,6 +28,7 @@ public class EstadoPedidoConfirmado implements EstadoPedido {
     public void confirmarPedido() throws EstadoPedidoException {
         throw new EstadoPedidoException("El pedido ya está confirmado, no puede ser confirmado de nuevo.");
     }
+    
 
     @Override
     public void quitarPedido() throws EstadoPedidoException {
@@ -50,12 +52,17 @@ public class EstadoPedidoConfirmado implements EstadoPedido {
     }
 
     @Override
-    public void cobrarPedido() throws EstadoPedidoException {
-        this.pedido.setPrecio(cliente.aplicarBeneficio(pedido));
+    public void finalizarServicio() throws EstadoPedidoException {
+        
     }
 
     @Override
     public String getNombre() {
         return "Confirmado";
+    }
+
+    @Override
+    public boolean estaPendienteEntrega() {
+        return true;
     }
 }

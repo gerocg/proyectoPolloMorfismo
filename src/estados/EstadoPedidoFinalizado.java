@@ -8,6 +8,7 @@ import Exceptions.EstadoPedidoException;
 import modelo.Cliente;
 import modelo.Gestor;
 import modelo.Pedido;
+import modelo.Servicio;
 
 /**
  *
@@ -49,13 +50,18 @@ public class EstadoPedidoFinalizado implements EstadoPedido{
     }
 
     @Override
-    public void cobrarPedido() throws EstadoPedidoException{
-        this.pedido.setPrecio(cliente.aplicarBeneficio(pedido));
+    public void finalizarServicio() throws EstadoPedidoException{
+        
     }
 
     @Override
     public String getNombre() {
         return "Finalizado";
+    }
+
+    @Override
+    public boolean estaPendienteEntrega() {
+        return true;
     }
     
 }
