@@ -65,4 +65,9 @@ public class EstadoPedidoConfirmado implements EstadoPedido {
     public boolean estaPendienteEntrega() {
         return true;
     }
+
+    @Override
+    public boolean verificarInsumo() {
+        return false;
+    }
 }

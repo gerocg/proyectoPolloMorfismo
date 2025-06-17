@@ -34,6 +34,7 @@ public class VentanaGestor extends javax.swing.JFrame implements VistaGestor {
         initComponents();
         setLocationRelativeTo(null);
         this.gestor = gestor;
+        this.setTitle("Ventana gestor | Gestor: " + gestor.getNombreCompleto());
         this.lInfoGestor.setText("Gestor: " + gestor.getNombreCompleto() + " | Unidad Procesadora: " + gestor.getUnidad().getNombre());
         this.lPedidos.setCellRenderer(new RenderizadorPedidos());
         this.lPedidos.setModel(modeloLista);

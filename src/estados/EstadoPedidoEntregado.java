@@ -64,5 +64,10 @@ public class EstadoPedidoEntregado implements EstadoPedido {
         return false;
     }
 
+    @Override
+    public boolean verificarInsumo() {
+        return false;
+    }
+
     
 }

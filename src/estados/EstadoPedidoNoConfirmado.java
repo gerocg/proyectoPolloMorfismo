@@ -5,10 +5,11 @@
 package estados;
 
 import Exceptions.EstadoPedidoException;
+import Exceptions.InsumoException;
 import modelo.Cliente;
 import modelo.Gestor;
+import modelo.Ingrediente;
 import modelo.Pedido;
-import modelo.Servicio;
 
 /**
  *
@@ -25,14 +26,20 @@ public class EstadoPedidoNoConfirmado implements EstadoPedido {
     }
 
     @Override
-    public void confirmarPedido() {
+    public void confirmarPedido() throws InsumoException {
+        for(Ingrediente i : pedido.getItem().getIngredientes()){
+            if(i.getInsumo().noQuedaStock()){
+                throw new InsumoException("No hay stock suficiente de " + pedido.getItem().getNombre() + ".");
+            }
+            i.getInsumo().restarStock(i.getCantidad());
+        }
         this.pedido.setEstado(new EstadoPedidoConfirmado(pedido, cliente));
         this.pedido.definirFecha();
     }
 
     @Override
     public void quitarPedido() throws EstadoPedidoException {
-
+        
     }
 
     @Override
@@ -63,6 +70,11 @@ public class EstadoPedidoNoConfirmado implements EstadoPedido {
     @Override
     public boolean estaPendienteEntrega() {
         return false;
+    }
+
+    @Override
+    public boolean verificarInsumo() {
+        return true;
     }
 
 }

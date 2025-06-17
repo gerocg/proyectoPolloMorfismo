@@ -34,5 +34,7 @@ public interface VistaCliente {
 
     public void borrarPedidos();
 
+    public void eliminarPedido(Pedido p);
+
     
 }

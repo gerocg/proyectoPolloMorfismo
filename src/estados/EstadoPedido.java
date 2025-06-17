@@ -5,6 +5,7 @@
 package estados;
 
 import Exceptions.EstadoPedidoException;
+import Exceptions.InsumoException;
 import modelo.Gestor;
 
 /**
@@ -14,11 +15,13 @@ import modelo.Gestor;
 public interface EstadoPedido {
     public String getNombre();
     public boolean estaPendienteEntrega();
-    public void confirmarPedido() throws EstadoPedidoException;
+    public void confirmarPedido() throws EstadoPedidoException, InsumoException;
     public void quitarPedido() throws EstadoPedidoException;
     public void tomarPedido(Gestor gestor) throws EstadoPedidoException;
     public void entregarPedido() throws EstadoPedidoException;
     public void finalizarPedido() throws EstadoPedidoException;
     public void finalizarServicio() throws EstadoPedidoException;
+
+    public boolean verificarInsumo();
 
 }

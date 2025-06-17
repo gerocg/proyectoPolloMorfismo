@@ -50,6 +50,7 @@ public class Servicio {
     public void quitarPedido(Pedido p) {
         if (this.pedidos.contains(p)) {
             this.pedidos.remove(p);
+            this.precioServicio = calcularSinDescuento();
         }
     }
 
@@ -73,5 +74,7 @@ public class Servicio {
         }
         return total;
     }
+
+    
 
 }

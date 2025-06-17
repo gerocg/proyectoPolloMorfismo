@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.Cliente;
 import modelo.Dispositivo;
+import modelo.Ingrediente;
 import modelo.Item;
 import modelo.Pedido;
 import modelo.UnidadProcesadora;
@@ -48,6 +49,7 @@ public class EstadoDispositivoOcupado implements EstadoDispositivo {
     public void quitarPedido(Pedido pedido) throws DispositivoException {
         try {
             pedido.getEstado().quitarPedido();
+            dispositivo.getServicioActual().quitarPedido(pedido);
         } catch (EstadoPedidoException ex) {
             throw new DispositivoException("El estado del pedido es incorrecto.");
         }

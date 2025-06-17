@@ -25,6 +25,7 @@ public class Item {
         this.unidad = unidad;
         this.categoria = categoria;
         this.tipo = tipo;
+        registrarMinimo();
     }
 
     public String getNombre() {
@@ -50,7 +51,10 @@ public class Item {
     public Categoria getCategoria() {
         return categoria;
     }
-    
-    
-    
+
+    private void registrarMinimo() {
+        for(Ingrediente i : this.ingredientes){
+            i.getInsumo().verificarMinimo(i.getCantidad());
+        }
+    }
 }

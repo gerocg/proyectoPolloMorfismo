@@ -16,6 +16,14 @@ public class Ingrediente {
         this.cantidad = cantidad;
         this.insumo = insumo;
     }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public Insumo getInsumo() {
+        return insumo;
+    }
     
     
 }

@@ -431,10 +431,10 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
         controlador.agregarPedido(itemSeleccionado, tComentario.getText());
     }//GEN-LAST:event_btnAgregarPedidoActionPerformed
 
-    public void actualizarPrecio(float precio){
+    public void actualizarPrecio(float precio) {
         this.lTotal.setText("Monto total: $" + precio);
     }
-    
+
     public void agregarPedido(Pedido pedido) {
         String item = pedido.getItem().getNombre();
         String comentario = pedido.getComentario();
@@ -459,14 +459,24 @@ public class VentanaCliente extends javax.swing.JFrame implements VistaCliente {
         }
     }//GEN-LAST:event_lCategoriasValueChanged
 
+    public void eliminarPedido(Pedido p) {
+        for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+            Pedido pedidoEnTabla = (Pedido) modeloTabla.getValueAt(i, 0);
+            if (pedidoEnTabla.equals(p)) {
+                modeloTabla.removeRow(i);
+                break;
+            }
+        }
+    }
+
     private void bFinalizarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinalizarServicioActionPerformed
         controlador.finalizarServicio();
     }//GEN-LAST:event_bFinalizarServicioActionPerformed
 
-    public void borrarPedidos(){
+    public void borrarPedidos() {
         modeloTabla.setRowCount(0);
     }
-    
+
     private void lItemsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lItemsValueChanged
         if (!evt.getValueIsAdjusting()) {
             this.itemSeleccionado = lItems.getSelectedValue();

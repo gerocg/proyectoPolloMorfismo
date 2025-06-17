@@ -90,4 +90,8 @@ public class Pedido {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         return formato.format(fechaConfirmacion);
     }
+
+    public boolean verificarInsumo() {
+        return this.estado.verificarInsumo();
+    }
 }
