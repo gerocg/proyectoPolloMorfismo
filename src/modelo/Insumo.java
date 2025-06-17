@@ -39,7 +39,6 @@ public class Insumo {
         if(this.stockMinimo < cantidad){
             this.stockMinimo = cantidad;
         }
-        System.out.println(stockMinimo + " " + nombre);
     }
 
     public void restarStock(int cantidad) {
