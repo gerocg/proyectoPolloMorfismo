@@ -94,4 +94,8 @@ public class Pedido {
     public boolean verificarInsumo() {
         return this.estado.verificarInsumo();
     }
+
+    public String verificarFinalizado() {
+        return this.estado.verificarFinalizado();
+    }
 }

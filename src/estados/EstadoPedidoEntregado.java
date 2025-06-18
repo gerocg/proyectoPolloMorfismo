@@ -31,27 +31,27 @@ public class EstadoPedidoEntregado implements EstadoPedido {
 
     @Override
     public void confirmarPedido() throws EstadoPedidoException {
-        throw new EstadoPedidoException("El pedido ya ha sido entregado, no puede ser confirmado.");
+        throw new EstadoPedidoException("El pedido " + pedido.getItem().getNombre() +" ya está entregado, no puede ser confirmado.");
     }
 
     @Override
     public void quitarPedido() throws EstadoPedidoException {
-        throw new EstadoPedidoException("El pedido ya ha sido entregado, no puede ser eliminado.");
+        throw new EstadoPedidoException("El pedido " + pedido.getItem().getNombre() +" ya ha sido entregado, no puede ser eliminado.");
     }
 
     @Override
     public void tomarPedido(Gestor gestor) throws EstadoPedidoException {
-        throw new EstadoPedidoException("El pedido ya ha sido entregado, no puede ser tomado.");
+        throw new EstadoPedidoException("El pedido " + pedido.getItem().getNombre() +" ya ha sido entregado, no puede ser tomado.");
     }
 
     @Override
     public void entregarPedido() throws EstadoPedidoException {
-        throw new EstadoPedidoException("El pedido ya ha sido entregado, no puede ser entregado nuevamente.");
+        throw new EstadoPedidoException("El pedido " + pedido.getItem().getNombre() +" ya ha sido entregado, no puede ser entregado nuevamente.");
     }
     
     @Override
     public void finalizarPedido() throws EstadoPedidoException{
-        throw new EstadoPedidoException("El pedido ya ha sido entregado, no puede ser finalizado.");
+        throw new EstadoPedidoException("El pedido " + pedido.getItem().getNombre() +" ya ha sido entregado, no puede ser finalizado.");
     }
 
     @Override
@@ -69,5 +69,9 @@ public class EstadoPedidoEntregado implements EstadoPedido {
         return false;
     }
 
+    @Override
+    public String verificarFinalizado() {
+        return null;
+    }
     
 }

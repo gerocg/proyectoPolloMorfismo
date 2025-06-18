@@ -24,4 +24,6 @@ public interface EstadoPedido {
 
     public boolean verificarInsumo();
 
+    public String verificarFinalizado();
+
 }

@@ -26,22 +26,22 @@ public class EstadoPedidoEnProceso implements EstadoPedido {
 
     @Override
     public void confirmarPedido() throws EstadoPedidoException {
-        throw new EstadoPedidoException("El pedido está en proceso, no puede ser confirmado.");
+        throw new EstadoPedidoException("El pedido " + pedido.getItem().getNombre() +" está en proceso, no puede ser confirmado.");
     }
 
     @Override
     public void quitarPedido() throws EstadoPedidoException {
-        throw new EstadoPedidoException("El pedido está en proceso, no puede ser quitado.");
+        throw new EstadoPedidoException("El pedido " + pedido.getItem().getNombre() +" está en proceso, no puede ser quitado.");
     }
 
     @Override
     public void tomarPedido(Gestor gestor) throws EstadoPedidoException {
-        throw new EstadoPedidoException("El pedido está en proceso, no puede ser tomado.");
+        throw new EstadoPedidoException("El pedido " + pedido.getItem().getNombre() +" está en proceso, no puede ser tomado.");
     }
 
     @Override
     public void entregarPedido() throws EstadoPedidoException {
-        throw new EstadoPedidoException("El pedido está en proceso, no puede ser entregado.");
+        throw new EstadoPedidoException("El pedido " + pedido.getItem().getNombre() +" está en proceso, no puede ser entregado.");
     }
 
     @Override
@@ -67,5 +67,10 @@ public class EstadoPedidoEnProceso implements EstadoPedido {
     @Override
     public boolean verificarInsumo() {
         return false;
+    }
+    
+    @Override
+    public String verificarFinalizado() {
+        return null;
     }
 }

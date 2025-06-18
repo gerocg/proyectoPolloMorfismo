@@ -54,7 +54,7 @@ public class EstadoPedidoNoConfirmado implements EstadoPedido {
     
     @Override
     public void finalizarPedido() throws EstadoPedidoException{
-        throw new EstadoPedidoException("Debe confirmar el pedido antes de finalizarlo."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new EstadoPedidoException("Debe confirmar el pedido antes de finalizarlo."); 
     }
 
     @Override
@@ -77,4 +77,8 @@ public class EstadoPedidoNoConfirmado implements EstadoPedido {
         return true;
     }
 
+    @Override
+    public String verificarFinalizado() {
+        return null;
+    }
 }

@@ -26,7 +26,7 @@ public class EstadoPedidoFinalizado implements EstadoPedido{
 
     @Override
     public void confirmarPedido() throws EstadoPedidoException{
-        throw new EstadoPedidoException("El pedido ya está finalizado, no puede ser confirmado.");
+        throw new EstadoPedidoException("El pedido " + pedido.getItem().getNombre() +" ya está finalizado, no puede ser confirmado.");
     }
 
     @Override
@@ -69,4 +69,8 @@ public class EstadoPedidoFinalizado implements EstadoPedido{
         return false;
     }
     
+    @Override
+    public String verificarFinalizado() {
+        return "El pedido " + pedido.getItem().getNombre() + " está finalizado, recuerde ir a retirarlo.";
+    }
 }

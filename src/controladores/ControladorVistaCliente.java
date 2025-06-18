@@ -127,6 +127,9 @@ public class ControladorVistaCliente implements Observador {
         if (evento.equals(Observable.Evento.PEDIDO_CONFIRMADO)) {
             confirmarInsumos();
         }
+        if (evento.equals(Observable.Evento.PEDIDO_FINALIZADO)) {
+            confirmarFinalizados();
+        }
     }
     
     public void confirmarPedidos(List<Pedido> pedidosDelServicio) {
@@ -153,5 +156,17 @@ public class ControladorVistaCliente implements Observador {
                 }
             }
         }
+    }
+
+    private void confirmarFinalizados() {
+        String mensaje = "<html>";
+        for(Pedido p: this.pedidosDelDispositivo){
+           String mensajePedido = p.verificarFinalizado();
+            if( mensajePedido != null){
+                mensaje += mensajePedido + "<br>";
+            }
+        }
+        mensaje += "</html>";
+        vista.mensajeSistema(mensaje);
     }
 }

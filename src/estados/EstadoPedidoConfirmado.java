@@ -26,7 +26,7 @@ public class EstadoPedidoConfirmado implements EstadoPedido {
 
     @Override
     public void confirmarPedido() throws EstadoPedidoException {
-        throw new EstadoPedidoException("El pedido ya está confirmado, no puede ser confirmado de nuevo.");
+        throw new EstadoPedidoException("El pedido " + pedido.getItem().getNombre() +" ya está confirmado, no puede ser confirmado de nuevo.");
     }
     
 
@@ -43,12 +43,12 @@ public class EstadoPedidoConfirmado implements EstadoPedido {
 
     @Override
     public void entregarPedido() throws EstadoPedidoException {
-        throw new EstadoPedidoException("El pedido está confirmado, no puede ser entregado.");
+        throw new EstadoPedidoException("El pedido " + pedido.getItem().getNombre() +" está confirmado, no puede ser entregado.");
     }
 
     @Override
     public void finalizarPedido() throws EstadoPedidoException {
-        throw new EstadoPedidoException("El pedido está confirmado, no puede ser finalizado.");
+        throw new EstadoPedidoException("El pedido " + pedido.getItem().getNombre() +" está confirmado, no puede ser finalizado.");
     }
 
     @Override
@@ -69,5 +69,10 @@ public class EstadoPedidoConfirmado implements EstadoPedido {
     @Override
     public boolean verificarInsumo() {
         return false;
+    }
+
+    @Override
+    public String verificarFinalizado() {
+        return null;
     }
 }
