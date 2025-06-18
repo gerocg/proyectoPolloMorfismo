@@ -93,4 +93,8 @@ public class ControladorVistaGestor implements Observador {
         } 
     }
 
+    public void cerrarSesion(Gestor gestor) {
+        fachada.cerrarSesionGestor(gestor);
+    }
+
 }

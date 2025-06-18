@@ -80,6 +80,11 @@ public class VentanaGestor extends javax.swing.JFrame implements VistaGestor {
         lMensaje = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         lInfoGestor.setText("Info del gestor");
 
@@ -218,6 +223,10 @@ public class VentanaGestor extends javax.swing.JFrame implements VistaGestor {
     private void bEntregarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEntregarPedidoActionPerformed
         controlador.entregarPedido(pedidoSeleccionadoTabla);
     }//GEN-LAST:event_bEntregarPedidoActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        controlador.cerrarSesion(this.gestor);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

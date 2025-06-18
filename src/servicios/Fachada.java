@@ -148,6 +148,10 @@ public class Fachada {
         sDispositivos.finalizarPrecioServicio(dispositivo);
     }
 
+    public void cerrarSesionGestor(Gestor gestor) {
+        sPersonas.cerrarSesionGestor(gestor);
+    }
+
     
 
 }

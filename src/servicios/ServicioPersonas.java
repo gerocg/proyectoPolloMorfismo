@@ -67,6 +67,9 @@ public class ServicioPersonas {
         if (gestor == null) {
             throw new GestorIngresadoException("Datos incorrectos.");
         }
+        if(gestoresIngresados.contains(gestor)){
+            throw new GestorIngresadoException("El gestor ya está ingresado.");
+        }
         gestoresIngresados.add(gestor);
         return gestor;
     }
@@ -87,6 +90,12 @@ public class ServicioPersonas {
     public void finalizarSesion(Cliente cliente) {
         if (clientesIngresados.contains(cliente)) {
             clientesIngresados.remove(cliente);
+        }
+    }
+    
+    public void cerrarSesionGestor(Gestor gestor){
+        if(gestoresIngresados.contains(gestor)){
+            gestoresIngresados.remove(gestor);
         }
     }
 
